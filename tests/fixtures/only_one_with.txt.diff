@@ -1,0 +1,46 @@
+diff --git a/superlevel.de.txt b/superlevel.de.txt
+new file mode 100644
+index 0000000..1a6a623
+--- /dev/null
++++ b/superlevel.de.txt
+@@ -0,0 +1,4 @@
++body: //div[@class='.supervideo' | //div[@id='body']
++strip: //section[@id='comments']
++
++test_url: https://superlevel.de/spiele/fast-racing-neo-und-es-hat-zoom-gemacht/
+\ No newline at end of file
+diff --git a/theoatmeal.com.txt b/theoatmeal.com.txt
+new file mode 100644
+index 0000000..324adae
+--- /dev/null
++++ b/theoatmeal.com.txt
+@@ -0,0 +1,3 @@
++body: //div[contains(concat(' ',normalize-space(@class),' '),' super_vacuum ')] | //div[@id='comic']//div[contains(concat(' ',normalize-space(@class),' '),' center_text ')] | //div[contains(concat(' ',normalize-space(@class),' '),' pad3 ')] | //div[contains(concat(' ',normalize-space(@class),' '),' post_body ')]
++
++test_url: http://theoatmeal.com/comics/autocorrect
+\ No newline at end of file
+diff --git a/wow.gamona.de b/wow.gamona.de
+new file mode 100644
+index 0000000..46fda07
+--- /dev/null
++++ b/wow.gamona.de
+@@ -0,0 +1,18 @@
++title: //h1
++body: //div[contains(concat(' ',normalize-space(@class),' '),' articlebody ')] //span[contains(concat(' ',normalize-space(@class),' '),' picture ')]
++date: //time
++author: //div[contains(concat(' ',normalize-space(@class),' '),' author ')]//span
++
++#Socialbar
++strip: //div[contains(concat(' ',normalize-space(@class),' '),' articlebody ')]//div[contains(concat(' ',normalize-space(@class),' '),' social-bar ')]
++#Suggestions
++strip: //ul[contains(concat(' ',normalize-space(@class),' '),' triplelist ')]
++#Static Links
++strip: //ul[contains(concat(' ',normalize-space(@class),' '),' static_links ')]
++#Video Ad
++strip: //div[contains(concat(' ',normalize-space(@class),' '),' video_container ')]
++
++
++
++test_url: http://wow.gamona.de/2016/01/10/wochenruckblick-teufelsenergie-schicksalshammer-und-mehr/?utm_source=rss&utm_medium=rss&utm_campaign=rss
++test_url: http://wow.gamona.de/2016/12/02/make-a-wish-die-bose-miez-ab-sofort-als-ingame-haustier-und-pluschtier-zu-haben/
+\ No newline at end of file

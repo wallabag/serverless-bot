@@ -1,0 +1,32 @@
+frameworkVersion: ">=1.35.1 <2.0.0"
+
+service: serverless-site-config-github-check
+
+plugins:
+    - serverless-webpack
+    - serverless-offline
+
+custom:
+    webpack:
+        includeModules: true
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+    profile: default
+    region: ${opt:region, 'eu-west-1'}
+    environment:
+        NAMESPACE: wallabag
+        # SecureString from SSM Parameters
+        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+
+functions:
+    extension:
+        handler: handler.checkFileExtension
+        description: Validate file extensions
+        events:
+            -
+                http:
+                    path: webhook/extension
+                    method: post
+                    cors: true
