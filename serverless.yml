@@ -9,6 +9,9 @@ plugins:
 custom:
     webpack:
         includeModules: true
+        packager: yarn
+        packagerOptions:
+            ignoreScripts: true
 
 provider:
     name: aws
@@ -16,13 +19,13 @@ provider:
     profile: default
     region: ${opt:region, 'eu-west-1'}
     environment:
-        NAMESPACE: wallabag
+        NAMESPACE: Site config
         # SecureString from SSM Parameters
         GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
 
 functions:
     extension:
-        handler: handler.checkFileExtension
+        handler: handler.checkExtension
         description: Validate file extensions
         events:
             -

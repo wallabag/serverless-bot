@@ -5,7 +5,7 @@ import { checkExtension } from '../functions/extension'
 jest.mock('octonode')
 
 // mimic serverless environment variables
-process.env.NAMESPACE = 'wallabag'
+process.env.NAMESPACE = 'Site config'
 
 describe('Validating GitHub event', () => {
   test('bad event body', async () => {
@@ -115,8 +115,8 @@ describe('Validating extension', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('wallabag - File extension check')
-            expect(payload.description).toBeDefined()
+            expect(payload.context).toBe('Site config - File extension check')
+            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
           }),
         }
       }),
@@ -158,8 +158,8 @@ describe('Validating extension', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('wallabag - File extension check')
-            expect(payload.description).toBeDefined()
+            expect(payload.context).toBe('Site config - File extension check')
+            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
           }),
         }
       }),
@@ -201,8 +201,8 @@ describe('Validating extension', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('wallabag - File extension check')
-            expect(payload.description).toBeDefined()
+            expect(payload.context).toBe('Site config - File extension check')
+            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
           }),
         }
       }),
@@ -244,8 +244,8 @@ describe('Validating extension', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('success')
-            expect(payload.context).toBe('wallabag - File extension check')
-            expect(payload.description).toBeDefined()
+            expect(payload.context).toBe('Site config - File extension check')
+            expect(payload.description).toEqual(expect.not.stringContaining('has not a txt extension'))
           }),
         }
       }),

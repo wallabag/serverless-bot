@@ -72,7 +72,7 @@ export async function checkExtension(event, context, callback) {
 
   const validation = parse(diffResponse.body).every((diff) => {
     if (/\.txt$/.test(diff.to) === false) {
-      payload.description = `Fail: "${diff.to}" has not a txt extension`
+      payload.failure.description = `Fail: "${diff.to}" has not a txt extension`
 
       console.log(`Fail: "${diff.to}" has not a txt extension`)
 
