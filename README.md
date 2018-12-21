@@ -5,6 +5,8 @@
 
 This serverless project validates PRs sent to site-config repository: [fivefilters](https://github.com/fivefilters/ftr-site-config) & [graby](https://github.com/j0k3r/graby-site-config).
 
+![image](https://user-images.githubusercontent.com/62333/50344781-c0a13100-052c-11e9-9f6b-3a7cb4393262.png)
+
 ## Use Cases
 
 Available lambdas:
