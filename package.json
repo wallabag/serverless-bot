@@ -33,7 +33,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.4",
+    "@babel/runtime": "^7.8.7",
     "diffparser": "^2.0.1",
     "got": "^10.4.0",
     "octonode": "^0.9.5",
