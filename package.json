@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "diffparser": "^2.0.1",
-    "got": "^10.7.0",
+    "got": "^11.0.1",
     "octonode": "^0.9.5",
     "source-map-support": "^0.5.17"
   },
