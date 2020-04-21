@@ -144,7 +144,7 @@ describe('Validating extension', () => {
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
-      body: 'Response code 404 (Not Found)',
+      body: 'Response code 404 (null)',
       statusCode: 500,
     })
   })
