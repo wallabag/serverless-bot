@@ -1,9 +1,13 @@
-# Serverless SiteConfig GitHub Check
+# wallabag Serverless Bot
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
-[![Build Status](https://travis-ci.org/wallabag/serverless-site-config-github-check.svg?branch=master)](https://travis-ci.org/wallabag/serverless-site-config-github-check)
+[![Build Status](https://travis-ci.org/wallabag/serverless-bot.svg?branch=master)](https://travis-ci.org/wallabag/serverless-bot)
 
-This serverless project validates PRs sent to site-config repository: [fivefilters](https://github.com/fivefilters/ftr-site-config) & [graby](https://github.com/j0k3r/graby-site-config).
+This serverless project does some stuff to help the wallabag team. It:
+
+- validates PRs sent to site-config repository: [fivefilters](https://github.com/fivefilters/ftr-site-config) & [graby](https://github.com/j0k3r/graby-site-config)
+- automatically label PRs created by Weblate
+- more to come!
 
 ![image](https://user-images.githubusercontent.com/62333/50344781-c0a13100-052c-11e9-9f6b-3a7cb4393262.png)
 
@@ -12,6 +16,7 @@ This serverless project validates PRs sent to site-config repository: [fivefilte
 Available lambdas:
 
 - **extension**: It validates each file in the diff has a `.txt` extension.
+- **weblate**: It automatically label PRs created by Weblate.
 
 ## Prerequisites
 
@@ -37,7 +42,7 @@ By default
 
 Configure the webhook in [the GitHub repository settings](https://developer.github.com/webhooks/creating/#setting-up-a-webhook).
 
-- In the Payload URL, enter the URL you received after deploying. It would be something like `https://<your_url>.amazonaws.com/dev/webhook`.
+- In the Payload URL, enter the URL you received after deploying. It would be something like `https://<your_url>.amazonaws.com/dev/webhook/...`.
 - Choose the "application/json" in Content type.
 - In the types of events to trigger the webhook, select "Let me select individual events", then select at least `Pull Requests`.
 

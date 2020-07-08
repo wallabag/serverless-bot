@@ -107,21 +107,6 @@ describe('Validating GitHub event', () => {
 
 describe('Validating extension', () => {
   test('fail to retrieve the diff', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
-
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
-          }),
-        }
-      }),
-    })
-
     nock('http://git.hub')
       .get('/diff')
       .reply(404)

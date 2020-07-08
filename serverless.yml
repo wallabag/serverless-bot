@@ -1,6 +1,6 @@
 frameworkVersion: ">=1.54.0 <2.0.0"
 
-service: serverless-site-config-github-check
+service: wallabag-serverless-bot
 
 plugins:
     - serverless-webpack
@@ -31,5 +31,15 @@ functions:
             -
                 http:
                     path: webhook/extension
+                    method: post
+                    cors: true
+
+    weblate:
+        handler: handler.weblate
+        description: Auto label a PR create by Weblate
+        events:
+            -
+                http:
+                    path: webhook/weblate
                     method: post
                     cors: true
