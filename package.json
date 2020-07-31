@@ -29,7 +29,7 @@
     "webpack-node-externals": "^2.5.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
+    "@babel/runtime": "^7.11.0",
     "diffparser": "^2.0.1",
     "got": "^11.5.1",
     "octonode": "^0.9.5",
