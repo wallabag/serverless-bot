@@ -220,6 +220,49 @@ describe('Validating extension', () => {
     })
   })
 
+  test('one deleted file', async () => {
+    client.mockReturnValue({
+      repo: jest.fn((params) => {
+        expect(params).toBe('foo/bar')
+
+        return {
+          statusAsync: jest.fn((commit, payload) => {
+            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
+            expect(payload.state).toBe('success')
+            expect(payload.context).toBe('Site config - File extension check')
+            expect(payload.description).toEqual(expect.not.stringContaining('has not a txt extension'))
+          }),
+        }
+      }),
+    })
+
+    nock('http://git.hub')
+      .get('/diff')
+      .replyWithFile(200, `${__dirname}/fixtures/with_deleted_file.txt.diff`)
+
+    const callback = jest.fn()
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        diff_url: 'http://git.hub/diff',
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Process finished with state: success',
+      statusCode: 204,
+    })
+  })
+
   test('file extension is ok', async () => {
     client.mockReturnValue({
       repo: jest.fn((params) => {

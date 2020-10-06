@@ -71,6 +71,11 @@ export async function checkExtension(event, context, callback) {
   }
 
   const validation = parse(diffResponse.body).every((diff) => {
+    // we don't need to validate deleted file
+    if (diff.deleted === true) {
+      return true
+    }
+
     if (/\.txt$/.test(diff.to) === false) {
       payload.failure.description = `Fail: "${diff.to}" has not a txt extension`
 

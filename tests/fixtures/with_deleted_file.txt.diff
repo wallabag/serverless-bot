@@ -1,0 +1,24 @@
+diff --git a/elespanol.com.txt b/elespanol.com.txt
+new file mode 100644
+index 00000000..b6723006
+--- /dev/null
++++ b/elespanol.com.txt
+@@ -0,0 +1,6 @@
++title: //h1
++body: //div[@id='article-body-content']
++
++strip: //section[@class='rel-news']
++
++test_url: https://www.elespanol.com/omicrono/hardware/20180807/samsung-comienza-producir-discos-ssd-capacidad-masa/328468284_0.html
+diff --git a/omicrono.elespanol.com.txt b/omicrono.elespanol.com.txt
+deleted file mode 100644
+index eebc08e5..00000000
+--- a/omicrono.elespanol.com.txt
++++ /dev/null
+@@ -1,6 +0,0 @@
+-title: //h1/a
+-body: //div[@id='singlePostContent']
+-
+-strip: //blockquote
+-
+-test_url: https://omicrono.elespanol.com/2018/08/samsung-comienza-producir-discos-ssd-gran-capacidad-mucho-mas-baratos/
