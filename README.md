@@ -1,7 +1,7 @@
 # wallabag Serverless Bot
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
-[![Build Status](https://travis-ci.org/wallabag/serverless-bot.svg?branch=master)](https://travis-ci.org/wallabag/serverless-bot)
+![Tests](https://github.com/wallabag/serverless-bot/workflows/Tests/badge.svg)
 
 This serverless project does some stuff to help the wallabag team. It:
 
