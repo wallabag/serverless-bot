@@ -22,10 +22,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'issue',
-          'push',
-        ],
+        events: ['issue', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -50,10 +47,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -78,10 +72,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       organization: {
         login: '20minutes',
