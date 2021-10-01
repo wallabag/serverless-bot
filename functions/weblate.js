@@ -7,7 +7,7 @@ export async function weblate(event, context, callback) {
   const body = JSON.parse(event.body)
 
   // when creating the webhook
-  if (body && ('hook' in body)) {
+  if (body && 'hook' in body) {
     let response
 
     try {
@@ -31,7 +31,7 @@ export async function weblate(event, context, callback) {
     return callback(null, response)
   }
 
-  if (!(body && ('pull_request' in body))) {
+  if (!(body && 'pull_request' in body)) {
     return callback(null, {
       statusCode: 500,
       body: 'Event is not a Pull Request',

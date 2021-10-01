@@ -26,10 +26,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'issue',
-          'push',
-        ],
+        events: ['issue', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -54,10 +51,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -82,10 +76,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       organization: {
         login: '20minutes',
@@ -107,9 +98,7 @@ describe('Validating GitHub event', () => {
 
 describe('Validating extension', () => {
   test('fail to retrieve the diff', async () => {
-    nock('http://git.hub')
-      .get('/diff')
-      .reply(404)
+    nock('http://git.hub').get('/diff').reply(404)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -150,9 +139,7 @@ describe('Validating extension', () => {
       }),
     })
 
-    nock('http://git.hub')
-      .get('/diff')
-      .replyWithFile(200, `${__dirname}/fixtures/no_txt.diff`)
+    nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/no_txt.diff`)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -230,7 +217,9 @@ describe('Validating extension', () => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('success')
             expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(expect.not.stringContaining('has not a txt extension'))
+            expect(payload.description).toEqual(
+              expect.not.stringContaining('has not a txt extension')
+            )
           }),
         }
       }),
@@ -273,15 +262,15 @@ describe('Validating extension', () => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('success')
             expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(expect.not.stringContaining('has not a txt extension'))
+            expect(payload.description).toEqual(
+              expect.not.stringContaining('has not a txt extension')
+            )
           }),
         }
       }),
     })
 
-    nock('http://git.hub')
-      .get('/diff')
-      .replyWithFile(200, `${__dirname}/fixtures/with_a.txt.diff`)
+    nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/with_a.txt.diff`)
 
     const callback = jest.fn()
     const githubEvent = {
