@@ -3,7 +3,7 @@ import parse from 'diffparser'
 import { client } from 'octonode'
 import { updateStatus, validateWebhook } from './utils/github'
 
-export async function checkExtension(event, context, callback) {
+export async function handler(event, context, callback) {
   let response
   const githubClient = client(process.env.GITHUB_TOKEN)
 

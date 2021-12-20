@@ -25,7 +25,7 @@ provider:
 
 functions:
     extension:
-        handler: handler.checkExtension
+        handler: functions/extension.handler
         description: Validate file extensions
         events:
             -
@@ -35,7 +35,7 @@ functions:
                     cors: true
 
     weblate:
-        handler: handler.weblate
+        handler: functions/weblate.handler
         description: Auto label a PR create by Weblate
         events:
             -
