@@ -3,7 +3,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint functions/ tests/ handler.js"
+    "lint": "eslint functions/ tests/"
   },
   "author": "wallabag <hello@wallabag.org>",
   "license": "MIT",

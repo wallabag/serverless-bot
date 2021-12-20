@@ -1,7 +1,7 @@
 import { client } from 'octonode'
 import { validateWebhook } from './utils/github'
 
-export async function weblate(event, context, callback) {
+export async function handler(event, context, callback) {
   const githubClient = client(process.env.GITHUB_TOKEN)
 
   const body = JSON.parse(event.body)

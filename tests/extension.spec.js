@@ -1,6 +1,6 @@
 import nock from 'nock'
 import { client } from 'octonode'
-import { checkExtension } from '../functions/extension'
+import { handler } from '../functions/extension'
 
 jest.mock('octonode')
 
@@ -11,7 +11,7 @@ describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await checkExtension({ body: '{}' }, {}, callback)
+    await handler({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -36,7 +36,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -61,7 +61,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -86,7 +86,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -114,7 +114,7 @@ describe('Validating extension', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -155,7 +155,7 @@ describe('Validating extension', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -198,7 +198,7 @@ describe('Validating extension', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -243,7 +243,7 @@ describe('Validating extension', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -286,7 +286,7 @@ describe('Validating extension', () => {
       },
     }
 
-    await checkExtension({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {

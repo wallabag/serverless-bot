@@ -1,5 +1,5 @@
 import { client } from 'octonode'
-import { weblate } from '../functions/weblate'
+import { handler } from '../functions/weblate'
 
 jest.mock('octonode')
 
@@ -7,7 +7,7 @@ describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await weblate({ body: '{}' }, {}, callback)
+    await handler({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -32,7 +32,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await weblate({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -57,7 +57,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await weblate({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -82,7 +82,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await weblate({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -123,7 +123,7 @@ describe('Apply label', () => {
       },
     }
 
-    await weblate({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -161,7 +161,7 @@ describe('Apply label', () => {
       },
     }
 
-    await weblate({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
