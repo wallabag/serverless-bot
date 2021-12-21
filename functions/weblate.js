@@ -1,8 +1,8 @@
-import { client } from 'octonode'
+import { Octokit } from '@octokit/rest'
 import { validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
-  const githubClient = client(process.env.GITHUB_TOKEN)
+  const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
 
   const body = JSON.parse(event.body)
 
@@ -47,9 +47,12 @@ export async function handler(event, context, callback) {
     })
   }
 
-  await githubClient
-    .issue(body.repository.full_name, body.pull_request.number)
-    .addLabelsAsync(['Translations'])
+  await githubClient.rest.issues.setLabels({
+    owner: body.repository.owner.login,
+    repo: body.repository.name,
+    issue_number: body.pull_request.number,
+    labels: [{ name: 'Translations' }],
+  })
 
   console.log('Labelled!')
 

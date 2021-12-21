@@ -1,8 +1,5 @@
 import nock from 'nock'
-import { client } from 'octonode'
 import { handler } from '../functions/extension'
-
-jest.mock('octonode')
 
 // mimic serverless environment variables
 process.env.NAMESPACE = 'Site config'
@@ -110,7 +107,11 @@ describe('Validating extension', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -124,20 +125,15 @@ describe('Validating extension', () => {
   })
 
   test('file extension is not txt', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('Site config - File extension check')
+        expect(body.description).toEqual(expect.stringContaining('has not a txt extension'))
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
 
     nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/no_txt.diff`)
 
@@ -151,7 +147,11 @@ describe('Validating extension', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -165,20 +165,15 @@ describe('Validating extension', () => {
   })
 
   test('at least one file extension is not txt', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('Site config - File extension check')
+        expect(body.description).toEqual(expect.stringContaining('has not a txt extension'))
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(expect.stringContaining('has not a txt extension'))
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
 
     nock('http://git.hub')
       .get('/diff')
@@ -194,7 +189,11 @@ describe('Validating extension', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -208,22 +207,15 @@ describe('Validating extension', () => {
   })
 
   test('one deleted file', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('Site config - File extension check')
+        expect(body.description).toEqual(expect.not.stringContaining('has not a txt extension'))
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(
-              expect.not.stringContaining('has not a txt extension')
-            )
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
 
     nock('http://git.hub')
       .get('/diff')
@@ -239,7 +231,11 @@ describe('Validating extension', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -253,22 +249,15 @@ describe('Validating extension', () => {
   })
 
   test('file extension is ok', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('Site config - File extension check')
+        expect(body.description).toEqual(expect.not.stringContaining('has not a txt extension'))
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('Site config - File extension check')
-            expect(payload.description).toEqual(
-              expect.not.stringContaining('has not a txt extension')
-            )
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
 
     nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/with_a.txt.diff`)
 
@@ -282,7 +271,11 @@ describe('Validating extension', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 

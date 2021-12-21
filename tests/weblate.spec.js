@@ -1,7 +1,5 @@
-import { client } from 'octonode'
+import nock from 'nock'
 import { handler } from '../functions/weblate'
-
-jest.mock('octonode')
 
 describe('Validating GitHub event', () => {
   test('bad event body', async () => {
@@ -94,19 +92,6 @@ describe('Validating GitHub event', () => {
 
 describe('Apply label', () => {
   test('PR is NOT ok', async () => {
-    client.mockReturnValue({
-      issue: jest.fn((fullName, number) => {
-        expect(fullName).toBe('foo/bar')
-        expect(number).toBe(42)
-
-        return {
-          addLabelsAsync: jest.fn((labels) => {
-            expect(labels[0]).toBe('Translations')
-          }),
-        }
-      }),
-    })
-
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -116,7 +101,11 @@ describe('Apply label', () => {
         number: 42,
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
       sender: {
         login: 'j0k3r',
@@ -131,19 +120,15 @@ describe('Apply label', () => {
       statusCode: 204,
     })
   })
-  test('PR is ok', async () => {
-    client.mockReturnValue({
-      issue: jest.fn((fullName, number) => {
-        expect(fullName).toBe('foo/bar')
-        expect(number).toBe(42)
 
-        return {
-          addLabelsAsync: jest.fn((labels) => {
-            expect(labels[0]).toBe('Translations')
-          }),
-        }
-      }),
-    })
+  test('PR is ok', async () => {
+    nock('https://api.github.com')
+      .put('/repos/foo/bar/issues/42/labels', (body) => {
+        expect(body.labels[0].name).toBe('Translations')
+
+        return true
+      })
+      .reply(200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -154,7 +139,11 @@ describe('Apply label', () => {
         number: 42,
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
       sender: {
         login: 'weblate',
