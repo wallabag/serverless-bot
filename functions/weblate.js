@@ -47,12 +47,15 @@ export async function handler(event, context, callback) {
     })
   }
 
-  await githubClient.rest.issues.setLabels({
-    owner: body.repository.owner.login,
-    repo: body.repository.name,
-    issue_number: body.pull_request.number,
-    labels: [{ name: 'Translations' }],
-  })
+  const owner = body.repository.owner.login
+  const repo = body.repository.name
+
+  await githubClient.request(
+    `POST /repos/${owner}/${repo}/issues/${body.pull_request.number}/labels`,
+    {
+      labels: ['Translations'],
+    }
+  )
 
   console.log('Labelled!')
 

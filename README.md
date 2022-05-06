@@ -20,8 +20,8 @@ Available lambdas:
 
 ## Prerequisites
 
-- Node.js 12
-- Serverless CLI v1.54.0 or later (`npm install -g serverless`)
+- Node.js 14
+- Serverless CLI v3.16.0 or later (`npm install -g serverless@3`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 

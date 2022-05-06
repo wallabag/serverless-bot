@@ -123,8 +123,8 @@ describe('Apply label', () => {
 
   test('PR is ok', async () => {
     nock('https://api.github.com')
-      .put('/repos/foo/bar/issues/42/labels', (body) => {
-        expect(body.labels[0].name).toBe('Translations')
+      .post('/repos/foo/bar/issues/42/labels', (body) => {
+        expect(body.labels[0]).toBe('Translations')
 
         return true
       })
