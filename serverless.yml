@@ -1,4 +1,4 @@
-frameworkVersion: ">=1.54.0 <2.0.0"
+frameworkVersion: ">=3.16.0"
 
 service: wallabag-serverless-bot
 
@@ -15,13 +15,15 @@ custom:
 
 provider:
     name: aws
-    runtime: nodejs12.x
+    runtime: nodejs14.x
     profile: default
     region: ${opt:region, 'eu-west-1'}
+    versionFunctions: false
+    deploymentMethod: direct
     environment:
         NAMESPACE: Site config
         # SecureString from SSM Parameters
-        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN}
 
 functions:
     extension:
