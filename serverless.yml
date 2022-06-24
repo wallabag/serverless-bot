@@ -20,6 +20,7 @@ provider:
     region: ${opt:region, 'eu-west-1'}
     versionFunctions: false
     deploymentMethod: direct
+    architecture: arm64
     environment:
         NAMESPACE: Site config
         # SecureString from SSM Parameters
