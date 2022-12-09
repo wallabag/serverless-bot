@@ -35,7 +35,7 @@
     "@babel/runtime": "^7.20.6",
     "@octokit/rest": "^19.0.5",
     "diffparser": "^2.0.1",
-    "got": "^11.8.5",
+    "got": "^11.8.6",
     "source-map-support": "^0.5.21"
   },
   "jest": {
