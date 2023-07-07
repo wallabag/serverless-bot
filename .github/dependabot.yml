@@ -7,6 +7,10 @@ updates:
     time: "02:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
+  groups:
+    babel-dependencies:
+      patterns:
+        - "*babel*"
   ignore:
   # because of ESM
   - dependency-name: got
