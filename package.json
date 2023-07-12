@@ -2,7 +2,7 @@
   "name": "wallabag-serverless-bot",
   "main": "handler.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_OPTIONS=--no-experimental-fetch jest",
     "lint": "eslint functions/ tests/"
   },
   "author": "wallabag <hello@wallabag.org>",
