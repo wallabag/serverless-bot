@@ -8,7 +8,7 @@
   "author": "wallabag <hello@wallabag.org>",
   "license": "MIT",
   "devDependencies": {
-    "@20minutes/eslint-config": "^1.2.4",
+    "@20minutes/eslint-config": "^1.2.6",
     "@babel/core": "^7.22.10",
     "@babel/eslint-parser": "^7.22.10",
     "@babel/preset-env": "^7.22.10",
