@@ -1,4 +1,5 @@
-import nock from 'nock'
+import fetchMock from 'fetch-mock'
+import { WeblateHandler } from '../functions/classes/WeblateHandler'
 import { handler } from '../functions/weblate'
 
 describe('Validating GitHub event', () => {
@@ -122,13 +123,9 @@ describe('Apply label', () => {
   })
 
   test('PR is ok', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/issues/42/labels', (body) => {
-        expect(body.labels[0]).toBe('Translations')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock('https://api.github.com/repos/foo/bar/issues/42/labels', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -150,12 +147,15 @@ describe('Apply label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const weblate = new WeblateHandler('GH_TOKEN', mock)
+    await weblate.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished',
       statusCode: 204,
     })
+
+    expect(mock.lastOptions().body).toBe('{"labels":["Translations"]}')
   })
 })
