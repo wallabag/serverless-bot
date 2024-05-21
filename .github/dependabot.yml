@@ -16,3 +16,7 @@ updates:
   - dependency-name: got
     versions:
     - ">= 12"
+  # because of ESM
+  - dependency-name: node-fetch
+    versions:
+    - "> 2"
