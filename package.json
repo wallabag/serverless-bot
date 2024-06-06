@@ -9,9 +9,9 @@
   "license": "MIT",
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.6",
-    "@babel/core": "^7.24.6",
-    "@babel/eslint-parser": "^7.24.6",
-    "@babel/preset-env": "^7.24.6",
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
     "babel-loader": "^9.1.3",
     "babel-plugin-source-map-support": "^2.2.0",
     "eslint": "^8.57.0",
@@ -34,7 +34,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.6",
+    "@babel/runtime": "^7.24.7",
     "@octokit/rest": "^20.1.1",
     "diffparser": "^2.0.1",
     "got": "^11.8.6",
