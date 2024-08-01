@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.25.0",
-    "@octokit/rest": "^20.1.1",
+    "@octokit/rest": "^21.0.1",
     "diffparser": "^2.0.1",
     "got": "^11.8.6",
     "source-map-support": "^0.5.21"
