@@ -1,5 +1,5 @@
 import nock from 'nock'
-import fetchMock from 'fetch-mock'
+import fetchMock from '@fetch-mock/jest'
 import { ExtensionHandler } from '../functions/classes/ExtensionHandler'
 import { handler } from '../functions/extension'
 
@@ -124,12 +124,7 @@ describe('Validating extension', () => {
   })
 
   test('file extension is not txt', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/no_txt.diff`)
 
@@ -151,7 +146,7 @@ describe('Validating extension', () => {
       },
     }
 
-    const extension = new ExtensionHandler('GH_TOKEN', 'Test config', mock)
+    const extension = new ExtensionHandler('GH_TOKEN', 'Test config')
     await extension.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -160,21 +155,20 @@ describe('Validating extension', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'Test config - File extension check',
-      description: 'Fail: "theatlantic.com" has not a txt extension',
-      state: 'failure',
-    })
+    expect(fetch).toHaveFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'Test config - File extension check',
+          description: 'Fail: "theatlantic.com" has not a txt extension',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('at least one file extension is not txt', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     nock('http://git.hub')
       .get('/diff')
@@ -198,7 +192,7 @@ describe('Validating extension', () => {
       },
     }
 
-    const extension = new ExtensionHandler('GH_TOKEN', 'Test config', mock)
+    const extension = new ExtensionHandler('GH_TOKEN', 'Test config')
     await extension.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -207,21 +201,20 @@ describe('Validating extension', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'Test config - File extension check',
-      description: 'Fail: "wow.gamona.de" has not a txt extension',
-      state: 'failure',
-    })
+    expect(fetch).toHaveFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'Test config - File extension check',
+          description: 'Fail: "wow.gamona.de" has not a txt extension',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('one deleted file', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     nock('http://git.hub')
       .get('/diff')
@@ -245,7 +238,7 @@ describe('Validating extension', () => {
       },
     }
 
-    const extension = new ExtensionHandler('GH_TOKEN', 'Test config', mock)
+    const extension = new ExtensionHandler('GH_TOKEN', 'Test config')
     await extension.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -254,21 +247,20 @@ describe('Validating extension', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'Test config - File extension check',
-      description: 'passed',
-      state: 'success',
-    })
+    expect(fetch).toHaveFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'Test config - File extension check',
+          description: 'passed',
+          state: 'success',
+        },
+      }
+    )
   })
 
   test('file extension is ok', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     nock('http://git.hub').get('/diff').replyWithFile(200, `${__dirname}/fixtures/with_a.txt.diff`)
 
@@ -290,7 +282,7 @@ describe('Validating extension', () => {
       },
     }
 
-    const extension = new ExtensionHandler('GH_TOKEN', 'Test config', mock)
+    const extension = new ExtensionHandler('GH_TOKEN', 'Test config')
     await extension.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -299,11 +291,15 @@ describe('Validating extension', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'Test config - File extension check',
-      description: 'passed',
-      state: 'success',
-    })
+    expect(fetch).toHaveFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'Test config - File extension check',
+          description: 'passed',
+          state: 'success',
+        },
+      }
+    )
   })
 })
