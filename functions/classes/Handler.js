@@ -1,15 +1,9 @@
 import { Octokit } from '@octokit/rest'
 
 export class Handler {
-  constructor(githubToken, fetch = null) {
+  constructor(githubToken) {
     const options = {
       auth: githubToken,
-    }
-
-    if (fetch) {
-      options.request = {
-        fetch,
-      }
     }
 
     this.githubClient = new Octokit(options)

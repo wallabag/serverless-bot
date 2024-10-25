@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock'
+import fetchMock from '@fetch-mock/jest'
 import { WeblateHandler } from '../functions/classes/WeblateHandler'
 import { handler } from '../functions/weblate'
 
@@ -123,9 +123,7 @@ describe('Apply label', () => {
   })
 
   test('PR is ok', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock('https://api.github.com/repos/foo/bar/issues/42/labels', 200)
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -147,7 +145,7 @@ describe('Apply label', () => {
       },
     }
 
-    const weblate = new WeblateHandler('GH_TOKEN', mock)
+    const weblate = new WeblateHandler('GH_TOKEN')
     await weblate.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -156,6 +154,8 @@ describe('Apply label', () => {
       statusCode: 204,
     })
 
-    expect(mock.lastOptions().body).toBe('{"labels":["Translations"]}')
+    expect(fetch).toHaveFetched('https://api.github.com/repos/foo/bar/issues/42/labels', {
+      body: { labels: ['Translations'] },
+    })
   })
 })

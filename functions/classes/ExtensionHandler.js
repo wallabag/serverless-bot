@@ -3,8 +3,8 @@ import parse from 'diffparser'
 import { Handler } from './Handler'
 
 export class ExtensionHandler extends Handler {
-  constructor(githubToken, namespace, fetch = null) {
-    super(githubToken, fetch)
+  constructor(githubToken, namespace) {
+    super(githubToken)
 
     this.namespace = namespace
   }
