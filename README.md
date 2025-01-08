@@ -1,6 +1,5 @@
 # wallabag Serverless Bot
 
-[![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
 ![Tests](https://github.com/wallabag/serverless-bot/workflows/Tests/badge.svg)
 
 This serverless project does some stuff to help the wallabag team. It:
@@ -20,8 +19,8 @@ Available lambdas:
 
 ## Prerequisites
 
-- Node.js 20
-- Serverless CLI v3.37.0 or later (`npm install -g serverless@3`)
+- Node.js 22
+- OSS Serverless (`npm install -g osls`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 
