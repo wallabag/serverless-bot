@@ -315,7 +315,7 @@ Message original`
         owner: 'wallabag',
         repo: 'wallabag',
         title: 'Test Subject',
-        body: expect.stringContaining('sender@example.com'),
+        body: expect.stringContaining('s***r@example.com'),
         labels: ['Site Config'],
       })
 
@@ -379,7 +379,7 @@ Message original`
         owner: 'wallabag',
         repo: 'wallabag',
         title: 'Test Subject from S3',
-        body: expect.stringContaining('sender@example.com'),
+        body: expect.stringContaining('s***r@example.com'),
         labels: ['Site Config'],
       })
 
@@ -459,7 +459,7 @@ Message original`
 
   describe('GitHub issue creation', () => {
     test('should format issue body correctly', async () => {
-      const senderEmail = 'test@example.com'
+      const senderEmail = 't***t@example.com'
       const emailBody = 'This is the email content\nWith multiple lines'
       const subject = 'Test Subject'
 
@@ -583,6 +583,142 @@ ${emailBody}`,
           title: specialSubject,
         })
       )
+    })
+  })
+
+  describe('Email masking', () => {
+    test('should mask email address with first and last character', () => {
+      expect(emailHandler.maskEmail('john.doe@example.com')).toBe('j***e@example.com')
+      expect(emailHandler.maskEmail('alice@domain.org')).toBe('a***e@domain.org')
+      expect(emailHandler.maskEmail('bob.smith@company.co.uk')).toBe('b***h@company.co.uk')
+    })
+
+    test('should mask very short email addresses', () => {
+      expect(emailHandler.maskEmail('ab@example.com')).toBe('a***@example.com')
+      expect(emailHandler.maskEmail('x@test.com')).toBe('x***@test.com')
+    })
+
+    test('should handle invalid email addresses', () => {
+      expect(emailHandler.maskEmail('not-an-email')).toBe('[invalid email]')
+      expect(emailHandler.maskEmail('')).toBe('[invalid email]')
+      expect(emailHandler.maskEmail(null)).toBe('[invalid email]')
+    })
+
+    test('should create GitHub issue with masked sender email', async () => {
+      await emailHandler.createGithubIssue('Test Subject', 'Test body', 'john.doe@example.com')
+
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.stringContaining('j***e@example.com'),
+        })
+      )
+
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.not.stringContaining('john.doe@example.com'),
+        })
+      )
+    })
+
+    test('should mask email addresses in body content', () => {
+      const body = `Please contact me at john.doe@example.com or alice@company.org`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***e@example.com')
+      expect(cleaned).toContain('a***e@company.org')
+      expect(cleaned).not.toContain('john.doe@example.com')
+      expect(cleaned).not.toContain('alice@company.org')
+    })
+
+    test('should mask multiple email addresses in body', () => {
+      const body = `Team members:
+- john@example.com
+- alice.smith@example.com
+- bob@company.org`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***n@example.com')
+      expect(cleaned).toContain('a***h@example.com')
+      expect(cleaned).toContain('b***b@company.org')
+    })
+
+    test('should mask email addresses with plus addressing', () => {
+      const body = `Contact: john+test@example.com`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***t@example.com')
+      expect(cleaned).not.toContain('john+test@example.com')
+    })
+  })
+
+  describe('Email masking', () => {
+    test('should mask email address with first and last character', () => {
+      expect(emailHandler.maskEmail('john.doe@example.com')).toBe('j***e@example.com')
+      expect(emailHandler.maskEmail('alice@domain.org')).toBe('a***e@domain.org')
+      expect(emailHandler.maskEmail('bob.smith@company.co.uk')).toBe('b***h@company.co.uk')
+    })
+
+    test('should mask very short email addresses', () => {
+      expect(emailHandler.maskEmail('ab@example.com')).toBe('a***@example.com')
+      expect(emailHandler.maskEmail('x@test.com')).toBe('x***@test.com')
+    })
+
+    test('should handle invalid email addresses', () => {
+      expect(emailHandler.maskEmail('not-an-email')).toBe('[invalid email]')
+      expect(emailHandler.maskEmail('')).toBe('[invalid email]')
+      expect(emailHandler.maskEmail(null)).toBe('[invalid email]')
+    })
+
+    test('should create GitHub issue with masked sender email', async () => {
+      await emailHandler.createGithubIssue('Test Subject', 'Test body', 'john.doe@example.com')
+
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.stringContaining('j***e@example.com'),
+        })
+      )
+
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.not.stringContaining('john.doe@example.com'),
+        })
+      )
+    })
+
+    test('should mask email addresses in body content', () => {
+      const body = `Please contact me at john.doe@example.com or alice@company.org`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***e@example.com')
+      expect(cleaned).toContain('a***e@company.org')
+      expect(cleaned).not.toContain('john.doe@example.com')
+      expect(cleaned).not.toContain('alice@company.org')
+    })
+
+    test('should mask multiple email addresses in body', () => {
+      const body = `Team members:
+- john@example.com
+- alice.smith@example.com
+- bob@company.org`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***n@example.com')
+      expect(cleaned).toContain('a***h@example.com')
+      expect(cleaned).toContain('b***b@company.org')
+    })
+
+    test('should mask email addresses with plus addressing', () => {
+      const body = `Contact: john+test@example.com`
+
+      const cleaned = emailHandler.cleanEmailBody(body)
+
+      expect(cleaned).toContain('j***t@example.com')
+      expect(cleaned).not.toContain('john+test@example.com')
     })
   })
 })

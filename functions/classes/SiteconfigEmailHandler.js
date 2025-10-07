@@ -63,8 +63,11 @@ export class SiteconfigEmailHandler extends Handler {
         })
       }
 
+      // Clean the email body before creating the issue
+      const cleanedBody = this.cleanEmailBody(body)
+
       // Create GitHub issue
-      const issue = await this.createGithubIssue(subject, body, senderEmail)
+      const issue = await this.createGithubIssue(subject, cleanedBody, senderEmail)
       console.log(`Created GitHub issue #${issue.number}: ${issue.html_url}`)
 
       // Send confirmation email
@@ -90,6 +93,142 @@ export class SiteconfigEmailHandler extends Handler {
         }),
       })
     }
+  }
+
+  /**
+   * Mask email address for privacy
+   * Example: john.doe@example.com -> j***e@example.com
+   *
+   * @param {string} email - Email address to mask
+   * @return {string} Masked email address
+   */
+  // eslint-disable-next-line class-methods-use-this
+  maskEmail(email) {
+    if (!email || typeof email !== 'string') {
+      return '[invalid email]'
+    }
+
+    const parts = email.split('@')
+    if (parts.length !== 2) {
+      return '[invalid email]'
+    }
+
+    const [localPart, domain] = parts
+
+    // If local part is very short (1-2 chars), show first char only
+    if (localPart.length <= 2) {
+      return `${localPart[0]}***@${domain}`
+    }
+
+    // For longer local parts, show first and last character
+    const firstChar = localPart[0]
+    const lastChar = localPart[localPart.length - 1]
+    const maskedLocal = `${firstChar}***${lastChar}`
+
+    return `${maskedLocal}@${domain}`
+  }
+
+  /**
+   * Clean email body by removing sensitive information and email artifacts
+   *
+   * @param {string} body - Raw email body
+   * @return {string} Cleaned email body
+   */
+  cleanEmailBody(body) {
+    let cleaned = body
+
+    // Remove email signatures (common patterns)
+    // Match lines after "-- " (standard signature delimiter)
+    cleaned = cleaned.replace(/\n--\s*\n[\s\S]*$/m, '')
+
+    // Remove common signature markers
+    const signaturePatterns = [
+      /\n\s*-+\s*\n.*?(?:sent from|envoyé de|enviado desde).*/gis,
+      /\n\s*sent from my (iphone|ipad|android|mobile|phone).*/gi,
+      /\n\s*envoyé de mon (iphone|ipad|android|mobile|téléphone).*/gi,
+      /\n\s*get outlook for (ios|android).*/gi,
+      /\n\s*télécharger outlook pour (ios|android).*/gi,
+    ]
+
+    signaturePatterns.forEach((pattern) => {
+      cleaned = cleaned.replace(pattern, '')
+    })
+
+    // Remove email headers that might be included in forwarded messages
+    const headerPatterns = [
+      /^(from|de|von|från):\s*.+$/gim,
+      /^(to|à|an|till):\s*.+$/gim,
+      /^(sent|date|envoyé|gesendet|skickat):\s*.+$/gim,
+      /^(cc|bcc):\s*.+$/gim,
+      /^subject:\s*.+$/gim,
+    ]
+
+    headerPatterns.forEach((pattern) => {
+      // Only remove if it appears at the start of a line with other headers nearby
+      if (cleaned.match(pattern)) {
+        const lines = cleaned.split('\n')
+        let headerCount = 0
+        let startIndex = -1
+
+        lines.forEach((line, index) => {
+          if (pattern.test(line)) {
+            if (startIndex === -1) {
+              startIndex = index
+            }
+            headerCount += 1
+          }
+        })
+
+        // If we found multiple header-like lines together, remove them
+        if (headerCount >= 2) {
+          cleaned = cleaned.replace(pattern, '')
+        }
+      }
+    })
+
+    // Remove quoted replies (lines starting with >)
+    cleaned = cleaned.replace(/^>+.+$/gm, '')
+
+    // Remove "On ... wrote:" patterns (quoted email headers)
+    cleaned = cleaned.replace(/^on\s+.+?\s+wrote:\s*$/gim, '')
+    cleaned = cleaned.replace(/^le\s+.+?\s+a écrit\s*:\s*$/gim, '')
+    cleaned = cleaned.replace(/^am\s+.+?\s+schrieb:\s*$/gim, '')
+    cleaned = cleaned.replace(/^el\s+.+?\s+escribió:\s*$/gim, '')
+
+    // Remove "Original Message" dividers
+    cleaned = cleaned.replace(/^-+\s*original message\s*-+$/gim, '')
+    cleaned = cleaned.replace(/^-+\s*message d'origine\s*-+$/gim, '')
+
+    // Mask email addresses in the body content
+    cleaned = cleaned.replace(/([\w.+-]+)@([\w.-]+\.\w+)/g, (match) => this.maskEmail(match))
+
+    // Remove phone numbers (various formats)
+    cleaned = cleaned.replace(
+      /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g,
+      '[phone redacted]'
+    )
+
+    // Remove credit card numbers (basic pattern)
+    cleaned = cleaned.replace(
+      /\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/g,
+      '[card number redacted]'
+    )
+
+    // Remove potential passwords or tokens (sequences like "password: xyz123")
+    cleaned = cleaned.replace(
+      /(password|passwd|pwd|token|api[-_]?key|secret):\s*\S+/gi,
+      '$1: [redacted]'
+    )
+
+    // Clean up excessive blank lines (more than 2 consecutive)
+    cleaned = cleaned.replace(/\n{3,}/g, '\n\n')
+
+    // Trim leading and trailing whitespace
+    cleaned = cleaned.trim()
+
+    console.log(`Email body cleaned: ${body.length} -> ${cleaned.length} characters`)
+
+    return cleaned
   }
 
   /**
@@ -171,7 +310,7 @@ export class SiteconfigEmailHandler extends Handler {
   }
 
   async createGithubIssue(subject, body, senderEmail) {
-    const issueBody = `*Sent by ${senderEmail} and automatically created by email*
+    const issueBody = `*Sent by ${this.maskEmail(senderEmail)} and automatically created by email*
 
 ---
 
