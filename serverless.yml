@@ -26,16 +26,18 @@ provider:
         role:
             statements:
                 # Permission to send emails via SES
-                - Effect: Allow
-                  Action:
-                      - ses:SendEmail
-                      - ses:SendRawEmail
-                  Resource: "*"
+                -
+                    Effect: Allow
+                    Action:
+                        - ses:SendEmail
+                        - ses:SendRawEmail
+                    Resource: "*"
                 # Permission to read from S3 bucket
-                - Effect: Allow
-                  Action:
-                      - s3:GetObject
-                  Resource: "arn:aws:s3:::${self:service}-emails/*"
+                -
+                    Effect: Allow
+                    Action:
+                        - s3:GetObject
+                    Resource: "arn:aws:s3:::${self:service}-emails/*"
 
 functions:
     extension:
@@ -69,9 +71,10 @@ functions:
         environment:
             GITHUB_TOKEN: ${ssm:WALLABAG_GITHUB_TOKEN}
         events:
-            - sns:
-                arn: !Ref SiteConfigEmailTopic
-                topicName: wallabag-siteconfig-emails
+            -
+                sns:
+                    arn: !Ref SiteConfigEmailTopic
+                    topicName: wallabag-siteconfig-emails
 
 resources:
     Resources:
