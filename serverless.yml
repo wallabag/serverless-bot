@@ -12,6 +12,7 @@ custom:
         packager: yarn
         packagerOptions:
             ignoreScripts: true
+        excludeRegex: 'node_modules/(@aws-sdk|@aws-crypto|(.+\.(md|JPG|jpg|jpeg)$))|yarn\.lock'
 
 provider:
     name: aws
@@ -21,15 +22,28 @@ provider:
     versionFunctions: false
     deploymentMethod: direct
     architecture: arm64
-    environment:
-        NAMESPACE: Site config
-        # SecureString from SSM Parameters
-        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN}
+    iam:
+        role:
+            statements:
+                # Permission to send emails via SES
+                - Effect: Allow
+                  Action:
+                      - ses:SendEmail
+                      - ses:SendRawEmail
+                  Resource: "*"
+                # Permission to read from S3 bucket
+                - Effect: Allow
+                  Action:
+                      - s3:GetObject
+                  Resource: "arn:aws:s3:::${self:service}-emails/*"
 
 functions:
     extension:
         handler: functions/extension.handler
         description: Validate file extensions
+        environment:
+            NAMESPACE: Site config
+            GITHUB_TOKEN: ${ssm:PERSO_GITHUB_TOKEN}
         events:
             -
                 http:
@@ -40,9 +54,135 @@ functions:
     weblate:
         handler: functions/weblate.handler
         description: Auto label a PR create by Weblate
+        environment:
+            GITHUB_TOKEN: ${ssm:WALLABAG_GITHUB_TOKEN}
         events:
             -
                 http:
                     path: webhook/weblate
                     method: post
                     cors: true
+
+    siteconfig-email:
+        handler: functions/siteconfig-email.handler
+        description: Handles siteconfig issue by email, create an issue and reply
+        environment:
+            GITHUB_TOKEN: ${ssm:WALLABAG_GITHUB_TOKEN}
+        events:
+            - sns:
+                arn: !Ref SiteConfigEmailTopic
+                topicName: wallabag-siteconfig-emails
+
+resources:
+    Resources:
+        # SNS Topic to receive emails from SES
+        SiteConfigEmailTopic:
+            Type: AWS::SNS::Topic
+            Properties:
+                TopicName: wallabag-siteconfig-emails
+                DisplayName: Wallabag Site Config Emails
+
+        # Policy to allow SES to publish to SNS topic
+        SiteConfigEmailTopicPolicy:
+            Type: AWS::SNS::TopicPolicy
+            Properties:
+                Topics:
+                    - !Ref SiteConfigEmailTopic
+                PolicyDocument:
+                    Version: '2012-10-17'
+                    Statement:
+                        - Effect: Allow
+                          Principal:
+                              Service: ses.amazonaws.com
+                          Action:
+                              - SNS:Publish
+                          Resource: !Ref SiteConfigEmailTopic
+                          Condition:
+                              StringEquals:
+                                  AWS:SourceAccount: !Ref AWS::AccountId
+
+        # S3 Bucket to store received emails
+        SiteConfigEmailBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:service}-emails
+                LifecycleConfiguration:
+                    Rules:
+                        - Id: DeleteOldEmails
+                          Status: Enabled
+                          ExpirationInDays: 7
+                PublicAccessBlockConfiguration:
+                    BlockPublicAcls: true
+                    BlockPublicPolicy: true
+                    IgnorePublicAcls: true
+                    RestrictPublicBuckets: true
+
+        # Policy to allow SES to write to S3 bucket
+        SiteConfigEmailBucketPolicy:
+            Type: AWS::S3::BucketPolicy
+            Properties:
+                Bucket: !Ref SiteConfigEmailBucket
+                PolicyDocument:
+                    Version: '2012-10-17'
+                    Statement:
+                        - Sid: AllowSESPuts
+                          Effect: Allow
+                          Principal:
+                              Service: ses.amazonaws.com
+                          Action:
+                              - s3:PutObject
+                          Resource: !Sub '${SiteConfigEmailBucket.Arn}/*'
+                          Condition:
+                              StringEquals:
+                                  AWS:SourceAccount: !Ref AWS::AccountId
+                              StringLike:
+                                  AWS:SourceArn: !Sub 'arn:aws:ses:${AWS::Region}:${AWS::AccountId}:*'
+
+        # SES Receipt Rule Set
+        SiteConfigReceiptRuleSet:
+            Type: AWS::SES::ReceiptRuleSet
+            Properties:
+                RuleSetName: wallabag-siteconfig-ruleset
+
+        # SES Receipt Rule to process emails
+        SiteConfigReceiptRule:
+            Type: AWS::SES::ReceiptRule
+            DependsOn:
+                - SiteConfigEmailBucketPolicy
+            Properties:
+                RuleSetName: !Ref SiteConfigReceiptRuleSet
+                Rule:
+                    Name: siteconfig-email-rule
+                    Enabled: true
+                    Recipients:
+                        - siteconfig@aws.wallabag.org
+                    Actions:
+                        # Action 1: Save email to S3
+                        - S3Action:
+                            BucketName: !Ref SiteConfigEmailBucket
+                            ObjectKeyPrefix: incoming/
+                        # Action 2: Publish to SNS to trigger Lambda
+                        - SNSAction:
+                            TopicArn: !Ref SiteConfigEmailTopic
+                            Encoding: UTF-8
+                    ScanEnabled: true
+                    TlsPolicy: Require
+
+    Outputs:
+        SiteConfigEmailTopicArn:
+            Description: ARN of SNS topic for site config emails
+            Value: !Ref SiteConfigEmailTopic
+            Export:
+                Name: ${self:service}-email-topic-arn
+
+        SiteConfigEmailBucketName:
+            Description: Name of S3 bucket to store emails
+            Value: !Ref SiteConfigEmailBucket
+            Export:
+                Name: ${self:service}-email-bucket-name
+
+        SiteConfigReceiptRuleSetName:
+            Description: Name of SES Receipt Rule Set
+            Value: !Ref SiteConfigReceiptRuleSet
+            Export:
+                Name: ${self:service}-receipt-ruleset-name

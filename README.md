@@ -16,6 +16,7 @@ Available lambdas:
 
 - **extension**: It validates each file in the diff has a `.txt` extension.
 - **weblate**: It automatically label PRs created by Weblate.
+- **siteconfig-email**: It handles a email requesting a siteconfig, create a GitHub issue and reply with that issue.
 
 ## Prerequisites
 
@@ -31,6 +32,7 @@ Available lambdas:
 - Get a [new personal access token](https://github.com/settings/tokens/new) on GitHub
 - Set it in [AWS Parameter Store](https://eu-west-1.console.aws.amazon.com/systems-manager/parameters/create?region=eu-west-1) as a `SecureString` with name `GITHUB_TOKEN`
 - Deploy the service using: `serverless deploy`
+- Enable the rule: `aws ses set-active-receipt-rule-set --rule-set-name wallabag-siteconfig-ruleset`
 
 By default
 
