@@ -35,7 +35,6 @@
     "eslint-plugin-react": "^7.37.5",
     "jest": "^30.2.0",
     "nock": "^14.0.10",
-    "node-fetch": "2",
     "prettier": "^3.6.2",
     "regenerator-runtime": "^0.14.1",
     "serverless-offline": "^13.9.0",
@@ -48,12 +47,11 @@
     "@aws-sdk/client-ses": "^3.901.0",
     "@babel/runtime": "^7.28.4",
     "@octokit/rest": "^20.1.2",
-    "@babel/runtime": "^7.26.7",
-    "@octokit/rest": "^20.1.1",
     "diffparser": "^2.0.1",
     "got": "^11.8.6",
     "mailparser": "^3.7.4",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "uri-js": "npm:uri-js-replace"
   },
   "jest": {
     "verbose": true,
