@@ -3,6 +3,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "jest --silent",
+    "test:watch": "jest --watch",
     "lint": "eslint functions/ tests/"
   },
   "author": "wallabag <hello@wallabag.org>",
@@ -18,6 +19,10 @@
     "@babel/eslint-parser": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@fetch-mock/jest": "^0.2.17",
+    "@jest/globals": "*",
+    "@smithy/util-stream": "^4.4.0",
+    "aws-sdk-client-mock": "^4.1.0",
+    "aws-sdk-client-mock-jest": "^4.1.0",
     "babel-loader": "^10.0.0",
     "babel-plugin-source-map-support": "^2.2.0",
     "eslint": "^8.57.1",
@@ -39,10 +44,15 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.901.0",
+    "@aws-sdk/client-ses": "^3.901.0",
     "@babel/runtime": "^7.28.4",
     "@octokit/rest": "^20.1.2",
+    "@babel/runtime": "^7.26.7",
+    "@octokit/rest": "^20.1.1",
     "diffparser": "^2.0.1",
     "got": "^11.8.6",
+    "mailparser": "^3.7.4",
     "source-map-support": "^0.5.21"
   },
   "jest": {
