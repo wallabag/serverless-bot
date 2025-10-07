@@ -210,6 +210,7 @@ Your email has been received and a GitHub issue has been automatically created t
 Issue #${issueNumber}: ${issueUrl}
 
 Our team will review your request and respond on the GitHub issue.
+If someone replies there, you will NOT receive an email notification.
 
 Helpful links:
 - Wallabagger: https://github.com/wallabag/wallabag/wiki/Wallabagger, an add-on for desktop browsers
@@ -230,6 +231,7 @@ Please do not reply to this email. Any responses will not be processed.`,
 <p>Your email has been received and a GitHub issue has been automatically created to track your request.</p>
 <p><strong>Issue #${issueNumber}:</strong> <a href="${issueUrl}">${issueUrl}</a></p>
 <p>Our team will review your request and respond on the GitHub issue.</p>
+<p><i>If someone replies there, you will NOT receive an email notification.</i></p>
 <p>Helpful links:</p>
 <ul>
 <li><a href="https://github.com/wallabag/wallabag/wiki/Wallabagger">Wallabagger</a>, an add-on for desktop browsers</li>
