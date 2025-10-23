@@ -18,7 +18,7 @@
     "@babel/core": "^7.28.4",
     "@babel/eslint-parser": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
-    "@fetch-mock/jest": "^0.2.17",
+    "@fetch-mock/jest": "^0.2.18",
     "@jest/globals": "*",
     "@smithy/util-stream": "^4.5.3",
     "aws-sdk-client-mock": "^4.1.0",
