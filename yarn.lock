@@ -3645,21 +3645,7 @@
     "@smithy/types" "^4.8.1"
     tslib "^2.6.2"
 
-"@smithy/util-stream@^4.4.0", "@smithy/util-stream@^4.5.4":
-  version "4.5.4"
-  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.5.4.tgz#bfc60e2714c2065b8e7e91ca921cc31c73efdbd4"
-  integrity sha512-+qDxSkiErejw1BAIXUFBSfM5xh3arbz1MmxlbMCKanDDZtVEQ7PSKW9FQS0Vud1eI/kYn0oCTVKyNzRlq+9MUw==
-  dependencies:
-    "@smithy/fetch-http-handler" "^5.3.4"
-    "@smithy/node-http-handler" "^4.4.3"
-    "@smithy/types" "^4.8.0"
-    "@smithy/util-base64" "^4.3.0"
-    "@smithy/util-buffer-from" "^4.2.0"
-    "@smithy/util-hex-encoding" "^4.2.0"
-    "@smithy/util-utf8" "^4.2.0"
-    tslib "^2.6.2"
-
-"@smithy/util-stream@^4.5.5":
+"@smithy/util-stream@^4.4.0", "@smithy/util-stream@^4.5.4", "@smithy/util-stream@^4.5.5":
   version "4.5.5"
   resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.5.5.tgz#a3fd73775c65dd23370d021b8818914a2c44f28e"
   integrity sha512-7M5aVFjT+HPilPOKbOmQfCIPchZe4DSBc1wf1+NvHvSoFTiFtauZzT+onZvCj70xhXd0AEmYnZYmdJIuwxOo4w==

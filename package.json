@@ -20,7 +20,7 @@
     "@babel/preset-env": "^7.28.5",
     "@fetch-mock/jest": "^0.2.20",
     "@jest/globals": "*",
-    "@smithy/util-stream": "^4.5.4",
+    "@smithy/util-stream": "^4.5.5",
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-jest": "^4.1.0",
     "babel-loader": "^10.0.0",
