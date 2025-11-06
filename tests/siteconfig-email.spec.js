@@ -10,7 +10,9 @@ import { SiteconfigEmailHandler } from '../functions/classes/SiteconfigEmailHand
  * Helper function to create email content with custom headers
  */
 const createEmailContentWithHeaders = (from, subject, body, headers) => {
-  let emailContent = `From: ${from}
+  const fromHeader = from.includes('<') ? from : `<${from}>`
+
+  let emailContent = `From: ${fromHeader}
 To: siteconfig@aws.wallabag.org
 Subject: ${subject}`
 
@@ -60,12 +62,17 @@ const createSESEventInlineWithHeaders = (from, subject, body, headers) => {
 /**
  * Helper function to create email content
  */
-const createEmailContent = (from, subject, body) => `From: ${from}
+const createEmailContent = (from, subject, body) => {
+  // Support format: "Name <email@example.com>" or just "email@example.com"
+  const fromHeader = from.includes('<') ? from : `<${from}>`
+
+  return `From: ${fromHeader}
 To: siteconfig@aws.wallabag.org
 Subject: ${subject}
 Content-Type: text/plain; charset=UTF-8
 
 ${body}`
+}
 
 /**
  * Helper function to create SES SNS event with inline content
@@ -315,7 +322,7 @@ Message original`
         owner: 'wallabag',
         repo: 'wallabag',
         title: 'Test Subject',
-        body: expect.stringContaining('s***r@example.com'),
+        body: expect.stringContaining('an anonymous user'),
         labels: ['Site Config'],
       })
 
@@ -379,7 +386,7 @@ Message original`
         owner: 'wallabag',
         repo: 'wallabag',
         title: 'Test Subject from S3',
-        body: expect.stringContaining('s***r@example.com'),
+        body: expect.stringContaining('an anonymous user'),
         labels: ['Site Config'],
       })
 
@@ -459,15 +466,15 @@ Message original`
 
   describe('GitHub issue creation', () => {
     test('should format issue body correctly', async () => {
-      const senderEmail = 't***t@example.com'
+      const senderName = 'Test User'
       const emailBody = 'This is the email content\nWith multiple lines'
       const subject = 'Test Subject'
 
-      await emailHandler.createGithubIssue(subject, emailBody, senderEmail)
+      await emailHandler.createGithubIssue(subject, emailBody, senderName)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: `*Sent by ${senderEmail} and automatically created by email*
+          body: `*Sent by ${senderName} and automatically created by email*
 
 ---
 
@@ -586,30 +593,19 @@ ${emailBody}`,
     })
   })
 
-  describe('Email masking', () => {
-    test('should mask email address with first and last character', () => {
-      expect(emailHandler.maskEmail('john.doe@example.com')).toBe('j***e@example.com')
-      expect(emailHandler.maskEmail('alice@domain.org')).toBe('a***e@domain.org')
-      expect(emailHandler.maskEmail('bob.smith@company.co.uk')).toBe('b***h@company.co.uk')
-    })
+  describe('Sender name extraction', () => {
+    test('should use sender name when available', async () => {
+      const event = createSESEventInline(
+        'John Doe <john.doe@example.com>',
+        'Test Subject',
+        'Test body'
+      )
 
-    test('should mask very short email addresses', () => {
-      expect(emailHandler.maskEmail('ab@example.com')).toBe('a***@example.com')
-      expect(emailHandler.maskEmail('x@test.com')).toBe('x***@test.com')
-    })
-
-    test('should handle invalid email addresses', () => {
-      expect(emailHandler.maskEmail('not-an-email')).toBe('[invalid email]')
-      expect(emailHandler.maskEmail('')).toBe('[invalid email]')
-      expect(emailHandler.maskEmail(null)).toBe('[invalid email]')
-    })
-
-    test('should create GitHub issue with masked sender email', async () => {
-      await emailHandler.createGithubIssue('Test Subject', 'Test body', 'john.doe@example.com')
+      await emailHandler.handle(event, mockCallback)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: expect.stringContaining('j***e@example.com'),
+          body: expect.stringContaining('Sent by John Doe and automatically created by email'),
         })
       )
 
@@ -620,37 +616,46 @@ ${emailBody}`,
       )
     })
 
-    test('should mask email addresses in body content', () => {
-      const body = `Please contact me at john.doe@example.com or alice@company.org`
+    test('should use nothing when no sender name is available', async () => {
+      const event = createSESEventInline('john.doe@example.com', 'Test Subject', 'Test body')
 
-      const cleaned = emailHandler.cleanEmailBody(body)
+      await emailHandler.handle(event, mockCallback)
 
-      expect(cleaned).toContain('j***e@example.com')
-      expect(cleaned).toContain('a***e@company.org')
-      expect(cleaned).not.toContain('john.doe@example.com')
-      expect(cleaned).not.toContain('alice@company.org')
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.stringContaining('an anonymous user'),
+        })
+      )
     })
 
-    test('should mask multiple email addresses in body', () => {
-      const body = `Team members:
-- john@example.com
-- alice.smith@example.com
-- bob@company.org`
+    test('should handle sender with empty name', async () => {
+      const event = createSESEventInline('<john.doe@example.com>', 'Test Subject', 'Test body')
 
-      const cleaned = emailHandler.cleanEmailBody(body)
+      await emailHandler.handle(event, mockCallback)
 
-      expect(cleaned).toContain('j***n@example.com')
-      expect(cleaned).toContain('a***h@example.com')
-      expect(cleaned).toContain('b***b@company.org')
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.stringContaining('an anonymous user'),
+        })
+      )
     })
 
-    test('should mask email addresses with plus addressing', () => {
-      const body = `Contact: john+test@example.com`
+    test('should use sender name in different languages', async () => {
+      const event = createSESEventInline(
+        'Jean-François Dupont <jean.dupont@example.com>',
+        'Test Subject',
+        'Test body'
+      )
 
-      const cleaned = emailHandler.cleanEmailBody(body)
+      await emailHandler.handle(event, mockCallback)
 
-      expect(cleaned).toContain('j***t@example.com')
-      expect(cleaned).not.toContain('john+test@example.com')
+      expect(mockCreateIssue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.stringContaining(
+            'Sent by Jean-François Dupont and automatically created by email'
+          ),
+        })
+      )
     })
   })
 
@@ -672,12 +677,12 @@ ${emailBody}`,
       expect(emailHandler.maskEmail(null)).toBe('[invalid email]')
     })
 
-    test('should create GitHub issue with masked sender email', async () => {
-      await emailHandler.createGithubIssue('Test Subject', 'Test body', 'john.doe@example.com')
+    test('should create GitHub issue with no email', async () => {
+      await emailHandler.createGithubIssue('Test Subject', 'Test body')
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: expect.stringContaining('j***e@example.com'),
+          body: expect.stringContaining('an anonymous user'),
         })
       )
 
