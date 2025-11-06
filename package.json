@@ -3,7 +3,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "jest --silent",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --coverage false",
     "lint": "eslint functions/ tests/"
   },
   "author": "wallabag <hello@wallabag.org>",

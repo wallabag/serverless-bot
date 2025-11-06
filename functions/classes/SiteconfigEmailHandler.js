@@ -44,7 +44,8 @@ export class SiteconfigEmailHandler extends Handler {
       // Parse email
       const parsed = await simpleParser(emailContent)
 
-      const senderEmail = snsMessage.mail.source
+      const senderEmail = parsed.from.text
+      const senderName = parsed.from?.value?.[0]?.name || null
       const { subject } = snsMessage.mail.commonHeaders
       const body = parsed.text || parsed.html || ''
 
@@ -67,7 +68,7 @@ export class SiteconfigEmailHandler extends Handler {
       const cleanedBody = this.cleanEmailBody(body)
 
       // Create GitHub issue
-      const issue = await this.createGithubIssue(subject, cleanedBody, senderEmail)
+      const issue = await this.createGithubIssue(subject, cleanedBody, senderName)
       console.log(`Created GitHub issue #${issue.number}: ${issue.html_url}`)
 
       // Send confirmation email
@@ -309,8 +310,9 @@ export class SiteconfigEmailHandler extends Handler {
     return false
   }
 
-  async createGithubIssue(subject, body, senderEmail) {
-    const issueBody = `*Sent by ${this.maskEmail(senderEmail)} and automatically created by email*
+  async createGithubIssue(subject, body, senderName = null) {
+    const sender = senderName || 'an anonymous user'
+    const issueBody = `*Sent by ${sender} and automatically created by email*
 
 ---
 
