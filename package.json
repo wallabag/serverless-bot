@@ -35,7 +35,7 @@
     "eslint-plugin-react": "^7.37.5",
     "jest": "^30.2.0",
     "nock": "^14.0.10",
-    "prettier": "^3.7.3",
+    "prettier": "^3.7.4",
     "regenerator-runtime": "^0.14.1",
     "serverless-offline": "^13.9.0",
     "serverless-webpack": "^5.15.3",
