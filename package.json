@@ -49,7 +49,7 @@
     "@octokit/rest": "^20.1.2",
     "diffparser": "^2.0.1",
     "got": "^11.8.6",
-    "mailparser": "^3.9.0",
+    "mailparser": "^3.9.1",
     "source-map-support": "^0.5.21",
     "uri-js": "npm:uri-js-replace"
   },
