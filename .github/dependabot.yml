@@ -3,11 +3,12 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
-    time: "02:00"
-    timezone: Europe/Paris
+    interval: weekly
   open-pull-requests-limit: 10
   groups:
+    aws-sdk-dependencies:
+      patterns:
+        - "*aws-sdk*"
     babel-dependencies:
       patterns:
         - "*babel*"
@@ -32,6 +33,4 @@ updates:
   directory: "/"
   schedule:
     interval: weekly
-    time: "04:00"
-    timezone: Europe/Paris
   open-pull-requests-limit: 10
