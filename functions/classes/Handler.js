@@ -9,7 +9,6 @@ export class Handler {
     this.githubClient = new Octokit(options)
   }
 
-  // eslint-disable-next-line class-methods-use-this
   validateEvent(body) {
     // when creating the webhook
     if (body && 'hook' in body) {

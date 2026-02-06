@@ -9,22 +9,7 @@ updates:
     aws-sdk-dependencies:
       patterns:
         - "*aws-sdk*"
-    babel-dependencies:
-      patterns:
-        - "*babel*"
   ignore:
-  # because of ESM
-  - dependency-name: got
-    versions:
-    - ">= 12"
-  # because of ESM
-  - dependency-name: node-fetch
-    versions:
-    - "> 2"
-  # because of ESM
-  - dependency-name: "@octokit/rest"
-    versions:
-    - ">= 21"
   # because it requires Serverless v4
   - dependency-name: "serverless-offline"
     versions:

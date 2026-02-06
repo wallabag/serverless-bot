@@ -1,20 +1,20 @@
-import { Handler } from './Handler'
+import { Handler } from './Handler.js'
 
 export class WeblateHandler extends Handler {
-  async handle(body, callback) {
+  async handle(body) {
     const response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     if (body.pull_request.user.login !== 'weblate' || body.sender.login !== 'weblate') {
-      return callback(null, {
+      return {
         statusCode: 204,
         body: 'PR is not from Weblate',
-      })
+      }
     }
 
     const owner = body.repository.owner.login
@@ -29,9 +29,9 @@ export class WeblateHandler extends Handler {
 
     console.log('Labelled!')
 
-    return callback(null, {
+    return {
       statusCode: 204,
       body: 'Process finished',
-    })
+    }
   }
 }

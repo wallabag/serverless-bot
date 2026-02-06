@@ -1,22 +1,18 @@
-import fetchMock from '@fetch-mock/jest'
-import { WeblateHandler } from '../functions/classes/WeblateHandler'
-import { handler } from '../functions/weblate'
+import fetchMock from '@fetch-mock/vitest'
+import { WeblateHandler } from '../functions/classes/WeblateHandler.js'
+import { handler } from '../functions/weblate.js'
 
 describe('Validating GitHub event', () => {
   test('bad event body', async () => {
-    const callback = jest.fn()
+    const response = await handler({ body: '{}' })
 
-    await handler({ body: '{}' }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'Event is not a Pull Request',
       statusCode: 500,
     })
   })
 
   test('hook event does not include PR', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -31,17 +27,15 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const response = await handler({ body: JSON.stringify(githubEvent) })
 
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'This webhook needs the "pull_request" event. Please tick it.',
       statusCode: 500,
     })
   })
 
   test('hook event is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -56,17 +50,15 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const response = await handler({ body: JSON.stringify(githubEvent) })
 
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for 20minutes/serverless-github-check, enjoy!',
       statusCode: 200,
     })
   })
 
   test('hook event for an organization is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -81,10 +73,9 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const response = await handler({ body: JSON.stringify(githubEvent) })
 
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for the organization 20minutes, enjoy!',
       statusCode: 200,
     })
@@ -93,7 +84,6 @@ describe('Validating GitHub event', () => {
 
 describe('Apply label', () => {
   test('PR is NOT ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         user: {
@@ -113,10 +103,9 @@ describe('Apply label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const response = await handler({ body: JSON.stringify(githubEvent) })
 
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'PR is not from Weblate',
       statusCode: 204,
     })
@@ -125,7 +114,6 @@ describe('Apply label', () => {
   test('PR is ok', async () => {
     fetchMock.mockGlobal().route('*', 200)
 
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         user: {
@@ -146,10 +134,9 @@ describe('Apply label', () => {
     }
 
     const weblate = new WeblateHandler('GH_TOKEN')
-    await weblate.handle(githubEvent, callback)
+    const response = await weblate.handle(githubEvent)
 
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    expect(response).toEqual({
       body: 'Process finished',
       statusCode: 204,
     })
