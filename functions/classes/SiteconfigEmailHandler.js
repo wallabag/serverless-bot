@@ -1,7 +1,7 @@
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { simpleParser } from 'mailparser'
-import { Handler } from './Handler'
+import { Handler } from './Handler.js'
 
 export class SiteconfigEmailHandler extends Handler {
   constructor(githubToken) {
@@ -11,7 +11,7 @@ export class SiteconfigEmailHandler extends Handler {
     this.s3Client = new S3Client({ region: process.env.AWS_REGION || 'eu-west-1' })
   }
 
-  async handle(event, callback) {
+  async handle(event) {
     try {
       console.log('Received SES email event')
       console.log(JSON.stringify(event))
@@ -55,13 +55,13 @@ export class SiteconfigEmailHandler extends Handler {
       if (this.isReplyEmail(subject, parsed)) {
         console.log('Email detected as a reply - skipping issue creation')
 
-        return callback(null, {
+        return {
           statusCode: 200,
           body: JSON.stringify({
             message: 'Email is a reply - no action taken',
             reason: 'Reply emails are not processed',
           }),
-        })
+        }
       }
 
       // Clean the email body before creating the issue
@@ -75,24 +75,24 @@ export class SiteconfigEmailHandler extends Handler {
       await this.sendConfirmationEmail(senderEmail, issue.html_url, issue.number)
       console.log(`Sent confirmation email to: ${senderEmail}`)
 
-      return callback(null, {
+      return {
         statusCode: 200,
         body: JSON.stringify({
           message: 'Email processed successfully',
           issueNumber: issue.number,
           issueUrl: issue.html_url,
         }),
-      })
+      }
     } catch (e) {
       console.error('Error processing email:', e)
 
-      return callback(null, {
+      return {
         statusCode: 500,
         body: JSON.stringify({
           message: 'Error processing email',
           error: e.message,
         }),
-      })
+      }
     }
   }
 
@@ -103,7 +103,6 @@ export class SiteconfigEmailHandler extends Handler {
    * @param {string} email - Email address to mask
    * @return {string} Masked email address
    */
-  // eslint-disable-next-line class-methods-use-this
   maskEmail(email) {
     if (!email || typeof email !== 'string') {
       return '[invalid email]'
@@ -239,7 +238,6 @@ export class SiteconfigEmailHandler extends Handler {
    * @param {object} parsed - Parsed email object from mailparser
    * @return {boolean} true if email is detected as a reply
    */
-  // eslint-disable-next-line class-methods-use-this
   isReplyEmail(subject, parsed) {
     // Check 1: Subject starts with Re: or RE: (case insensitive)
     if (/^re:/i.test(subject.trim())) {
@@ -276,7 +274,6 @@ export class SiteconfigEmailHandler extends Handler {
       /^답장:/i, // Korean
     ]
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const prefix of replyPrefixes) {
       if (prefix.test(subject.trim())) {
         console.log(`Reply detected: Subject matches reply prefix ${prefix}`)
@@ -296,7 +293,6 @@ export class SiteconfigEmailHandler extends Handler {
       /^>{1,}\s/m, // Lines starting with > (quoted text)
     ]
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const pattern of quotedTextPatterns) {
       if (pattern.test(bodyText.substring(0, 500))) {
         console.log(`Reply detected: Body contains quoted text pattern ${pattern}`)

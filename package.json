@@ -1,9 +1,11 @@
 {
   "name": "wallabag-serverless-bot",
+  "type": "module",
   "main": "handler.js",
   "scripts": {
-    "test": "jest --silent",
-    "test:watch": "jest --watch --coverage false",
+    "test": "vitest run --silent",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint functions/ tests/"
   },
   "author": "wallabag <hello@wallabag.org>",
@@ -11,62 +13,36 @@
   "engines": {
     "npm": "please-use-yarn-instead",
     "yarn": ">= 1.22.0",
-    "node": ">= 22"
+    "node": ">= 24"
   },
   "devDependencies": {
-    "@20minutes/eslint-config": "^1.2.7",
-    "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
-    "@babel/preset-env": "^7.29.0",
-    "@fetch-mock/jest": "^0.2.20",
-    "@jest/globals": "*",
+    "@20minutes/eslint-config": "^2.0.0",
+    "@fetch-mock/vitest": "^0.2.18",
     "@smithy/util-stream": "^4.5.11",
+    "@vitest/coverage-v8": "4.0.18",
     "aws-sdk-client-mock": "^4.1.0",
-    "aws-sdk-client-mock-jest": "^4.1.0",
-    "babel-loader": "^10.0.0",
-    "babel-plugin-source-map-support": "^2.2.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb": "^19.0.4",
+    "aws-sdk-client-mock-vitest": "^7.0.1",
+    "esbuild": "^0.27.3",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
-    "jest": "^30.2.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "nock": "^14.0.10",
     "prettier": "^3.8.1",
-    "regenerator-runtime": "^0.14.1",
+    "serverless-esbuild": "^1.55.1",
     "serverless-offline": "^13.9.0",
-    "serverless-webpack": "^5.15.3",
-    "webpack": "^5.104.1",
-    "webpack-node-externals": "^3.0.0"
+    "vitest": "4.0.18"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.981.0",
     "@aws-sdk/client-ses": "^3.981.0",
-    "@babel/runtime": "^7.28.6",
-    "@octokit/rest": "^20.1.2",
+    "@octokit/rest": "^22.0.1",
     "diffparser": "^2.0.1",
-    "got": "^11.8.6",
+    "got": "^14.6.6",
     "mailparser": "^3.9.3",
-    "source-map-support": "^0.5.21",
     "uri-js": "npm:uri-js-replace"
-  },
-  "jest": {
-    "verbose": true,
-    "clearMocks": true,
-    "testEnvironment": "node",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "functions/**/*.js",
-      "!**/node_modules/**"
-    ],
-    "coverageDirectory": "./build",
-    "coverageReporters": [
-      "html",
-      "text-summary"
-    ]
   },
   "resolutions": {
     "uri-js": "npm:uri-js-replace"

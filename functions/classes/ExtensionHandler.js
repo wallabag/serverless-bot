@@ -1,6 +1,6 @@
 import got from 'got'
 import parse from 'diffparser'
-import { Handler } from './Handler'
+import { Handler } from './Handler.js'
 
 export class ExtensionHandler extends Handler {
   constructor(githubToken, namespace) {
@@ -9,11 +9,11 @@ export class ExtensionHandler extends Handler {
     this.namespace = namespace
   }
 
-  async handle(body, callback) {
+  async handle(body) {
     let response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -35,12 +35,19 @@ export class ExtensionHandler extends Handler {
     try {
       diffResponse = await got(body.pull_request.diff_url)
     } catch (e) {
-      console.log(e.message)
+      const statusCode = e.response?.statusCode
+      const statusMessage = e.response?.statusMessage
+      const errorMessage =
+        typeof statusCode === 'number'
+          ? `Response code ${statusCode}${statusMessage ? ` (${statusMessage})` : ''}`
+          : e.message
 
-      return callback(null, {
+      console.log(errorMessage)
+
+      return {
         statusCode: 500,
-        body: e.message,
-      })
+        body: errorMessage,
+      }
     }
 
     const validation = parse(diffResponse.body).every((diff) => {
@@ -62,6 +69,6 @@ export class ExtensionHandler extends Handler {
 
     response = await this.updateStatus(body, validation ? payload.success : payload.failure)
 
-    return callback(null, response)
+    return response
   }
 }

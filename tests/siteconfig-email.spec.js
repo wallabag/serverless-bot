@@ -1,10 +1,9 @@
-import 'aws-sdk-client-mock-jest'
 import { mockClient } from 'aws-sdk-client-mock'
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { sdkStreamMixin } from '@smithy/util-stream'
-import { Readable } from 'stream'
-import { SiteconfigEmailHandler } from '../functions/classes/SiteconfigEmailHandler'
+import { Readable } from 'node:stream'
+import { SiteconfigEmailHandler } from '../functions/classes/SiteconfigEmailHandler.js'
 
 /**
  * Helper function to create email content with custom headers
@@ -137,28 +136,31 @@ const sesMock = mockClient(SESClient)
 const s3Mock = mockClient(S3Client)
 
 // Mock Octokit
-const mockCreateIssue = jest.fn()
-jest.mock('@octokit/rest', () => ({
-  Octokit: jest.fn().mockImplementation(() => ({
-    rest: {
-      issues: {
-        create: mockCreateIssue,
+const { mockCreateIssue } = vi.hoisted(() => ({
+  mockCreateIssue: vi.fn(),
+}))
+
+vi.mock('@octokit/rest', () => ({
+  Octokit: vi.fn(function Octokit() {
+    return {
+      rest: {
+        issues: {
+          create: mockCreateIssue,
+        },
       },
-    },
-  })),
+    }
+  }),
 }))
 
 describe('Site config email trigger', () => {
   let emailHandler
-  let mockCallback
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     sesMock.reset()
     s3Mock.reset()
 
     emailHandler = new SiteconfigEmailHandler('test-github-token')
-    mockCallback = jest.fn()
 
     // Setup default mock responses
     sesMock.on(SendEmailCommand).resolves({})
@@ -179,11 +181,11 @@ describe('Site config email trigger', () => {
         'This is a reply'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
       expect(sesMock).not.toHaveReceivedCommand(SendEmailCommand)
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 200,
         body: expect.stringContaining('Email is a reply'),
       })
@@ -196,7 +198,7 @@ describe('Site config email trigger', () => {
         'This is a reply'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -211,7 +213,7 @@ describe('Site config email trigger', () => {
         }
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -226,7 +228,7 @@ describe('Site config email trigger', () => {
         }
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -239,7 +241,7 @@ describe('Site config email trigger', () => {
 
       const event = createSESEventInline('sender@example.com', 'Question', bodyWithQuote)
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -252,7 +254,7 @@ Original message here`
 
       const event = createSESEventInline('sender@example.com', 'Question', bodyWithQuote)
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -265,7 +267,7 @@ Message original`
 
       const event = createSESEventInline('sender@example.com', 'Question', bodyWithQuote)
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -277,7 +279,7 @@ Message original`
         'This is a reply'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).not.toHaveBeenCalled()
     })
@@ -289,7 +291,7 @@ Message original`
         'This is a new request without any reply indicators'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalled()
       expect(sesMock).toHaveReceivedCommandTimes(SendEmailCommand, 1)
@@ -302,7 +304,7 @@ Message original`
         'My question'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalled()
     })
@@ -316,7 +318,7 @@ Message original`
         'Test email body content'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith({
         owner: 'wallabag',
@@ -326,7 +328,7 @@ Message original`
         labels: ['Site Config'],
       })
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 200,
         body: expect.stringContaining('Email processed successfully'),
       })
@@ -339,7 +341,7 @@ Message original`
         'This is my request content'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -375,7 +377,7 @@ Message original`
         'incoming/test-email-id'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
       expect(s3Mock).toHaveReceivedCommandWith(GetObjectCommand, {
         Bucket: 'test-bucket',
@@ -390,7 +392,7 @@ Message original`
         labels: ['Site Config'],
       })
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 200,
         body: expect.stringContaining('Email processed successfully'),
       })
@@ -406,9 +408,9 @@ Message original`
         'incoming/test-email-id'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 500,
         body: expect.stringContaining('Error processing email'),
       })
@@ -419,7 +421,7 @@ Message original`
     test('should send confirmation email after issue creation', async () => {
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(sesMock).toHaveReceivedCommandWith(SendEmailCommand, {
         Source: 'siteconfig@aws.wallabag.org',
@@ -458,7 +460,7 @@ Message original`
     test('should call SES send exactly once per email', async () => {
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(sesMock).toHaveReceivedCommandTimes(SendEmailCommand, 1)
     })
@@ -486,7 +488,7 @@ ${emailBody}`,
     test('should apply "Site Config" label to created issue', async () => {
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -498,7 +500,7 @@ ${emailBody}`,
     test('should create issue on wallabag/wallabag repository', async () => {
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -515,9 +517,9 @@ ${emailBody}`,
 
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 500,
         body: expect.stringContaining('Error processing email'),
       })
@@ -528,9 +530,9 @@ ${emailBody}`,
 
       const event = createSESEventInline('sender@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 500,
         body: expect.stringContaining('Error processing email'),
       })
@@ -556,9 +558,9 @@ ${emailBody}`,
         ],
       }
 
-      await emailHandler.handle(event, mockCallback)
+      const response = await emailHandler.handle(event)
 
-      expect(mockCallback).toHaveBeenCalledWith(null, {
+      expect(response).toEqual({
         statusCode: 500,
         body: expect.stringContaining('Unable to retrieve email content'),
       })
@@ -570,7 +572,7 @@ ${emailBody}`,
       const multilineBody = 'Line 1\nLine 2\nLine 3\n\nLine 5'
       const event = createSESEventInline('sender@example.com', 'Multiline Test', multilineBody)
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -583,7 +585,7 @@ ${emailBody}`,
       const specialSubject = 'Test with émojis 🎉 and special chars: <>&"'
       const event = createSESEventInline('sender@example.com', specialSubject, 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -601,7 +603,7 @@ ${emailBody}`,
         'Test body'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -619,7 +621,7 @@ ${emailBody}`,
     test('should use nothing when no sender name is available', async () => {
       const event = createSESEventInline('john.doe@example.com', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -631,7 +633,7 @@ ${emailBody}`,
     test('should handle sender with empty name', async () => {
       const event = createSESEventInline('<john.doe@example.com>', 'Test Subject', 'Test body')
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -647,7 +649,7 @@ ${emailBody}`,
         'Test body'
       )
 
-      await emailHandler.handle(event, mockCallback)
+      await emailHandler.handle(event)
 
       expect(mockCreateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
