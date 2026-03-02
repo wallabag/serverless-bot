@@ -1,5 +1,5 @@
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { simpleParser } from 'mailparser'
 import { Handler } from './Handler.js'
 
@@ -7,8 +7,12 @@ export class SiteconfigEmailHandler extends Handler {
   constructor(githubToken) {
     super(githubToken)
 
-    this.sesClient = new SESClient({ region: process.env.AWS_REGION || 'eu-west-1' })
-    this.s3Client = new S3Client({ region: process.env.AWS_REGION || 'eu-west-1' })
+    this.sesClient = new SESClient({
+      region: process.env.AWS_REGION || 'eu-west-1',
+    })
+    this.s3Client = new S3Client({
+      region: process.env.AWS_REGION || 'eu-west-1',
+    })
   }
 
   async handle(event) {

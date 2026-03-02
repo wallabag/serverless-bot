@@ -1,8 +1,8 @@
-import { mockClient } from 'aws-sdk-client-mock'
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import { sdkStreamMixin } from '@smithy/util-stream'
 import { Readable } from 'node:stream'
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
+import { sdkStreamMixin } from '@smithy/util-stream'
+import { mockClient } from 'aws-sdk-client-mock'
 import { SiteconfigEmailHandler } from '../functions/classes/SiteconfigEmailHandler.js'
 
 /**

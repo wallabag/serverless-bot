@@ -1,5 +1,5 @@
-import got from 'got'
 import parse from 'diffparser'
+import got from 'got'
 import { Handler } from './Handler.js'
 
 export class ExtensionHandler extends Handler {
