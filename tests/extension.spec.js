@@ -1,7 +1,7 @@
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import nock from 'nock'
 import fetchMock from '@fetch-mock/vitest'
+import nock from 'nock'
 import { ExtensionHandler } from '../functions/classes/ExtensionHandler.js'
 import { handler } from '../functions/extension.js'
 
