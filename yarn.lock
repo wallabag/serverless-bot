@@ -1856,12 +1856,11 @@
     "@smithy/types" "^4.13.1"
     tslib "^2.6.2"
 
-"@smithy/node-http-handler@^4.4.12", "@smithy/node-http-handler@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@smithy/node-http-handler/-/node-http-handler-4.5.0.tgz#6a506a0da462c79e725fdbcfa55b0eed5b929727"
-  integrity sha512-Rnq9vQWiR1+/I6NZZMNzJHV6pZYyEHt2ZnuV3MG8z2NNenC4i/8Kzttz7CjZiHSmsN5frhXhg17z3Zqjjhmz1A==
+"@smithy/node-http-handler@^4.4.12", "@smithy/node-http-handler@^4.5.0", "@smithy/node-http-handler@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@smithy/node-http-handler/-/node-http-handler-4.5.1.tgz#9f05b4478ccfc6db82af37579a36fa48ee8f6067"
+  integrity sha512-ejjxdAXjkPIs9lyYyVutOGNOraqUE9v/NjGMKwwFrfOM354wfSD8lmlj8hVwUzQmlLLF4+udhfCX9Exnbmvfzw==
   dependencies:
-    "@smithy/abort-controller" "^4.2.12"
     "@smithy/protocol-http" "^5.3.12"
     "@smithy/querystring-builder" "^4.2.12"
     "@smithy/types" "^4.13.1"
@@ -2060,13 +2059,13 @@
     "@smithy/types" "^4.13.1"
     tslib "^2.6.2"
 
-"@smithy/util-stream@^4.5.15", "@smithy/util-stream@^4.5.20":
-  version "4.5.20"
-  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.5.20.tgz#2d312ac8b9ea1780561a77048b027e7db1c6a3d4"
-  integrity sha512-4yXLm5n/B5SRBR2p8cZ90Sbv4zL4NKsgxdzCzp/83cXw2KxLEumt5p+GAVyRNZgQOSrzXn9ARpO0lUe8XSlSDw==
+"@smithy/util-stream@^4.5.15", "@smithy/util-stream@^4.5.20", "@smithy/util-stream@^4.5.21":
+  version "4.5.21"
+  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.5.21.tgz#a9ea13d0299d030c72ab4b4e394db111cd581629"
+  integrity sha512-KzSg+7KKywLnkoKejRtIBXDmwBfjGvg1U1i/etkC7XSWUyFCoLno1IohV2c74IzQqdhX5y3uE44r/8/wuK+A7Q==
   dependencies:
     "@smithy/fetch-http-handler" "^5.3.15"
-    "@smithy/node-http-handler" "^4.5.0"
+    "@smithy/node-http-handler" "^4.5.1"
     "@smithy/types" "^4.13.1"
     "@smithy/util-base64" "^4.3.2"
     "@smithy/util-buffer-from" "^4.2.2"
