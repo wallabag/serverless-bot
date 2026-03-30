@@ -20,7 +20,7 @@
     "@20minutes/eslint-config": "^3.0.2",
     "@fetch-mock/vitest": "^0.2.18",
     "@smithy/util-stream": "^4.5.15",
-    "@vitest/coverage-v8": "4.1.1",
+    "@vitest/coverage-v8": "4.1.2",
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.27.4",
