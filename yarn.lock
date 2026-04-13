@@ -2993,10 +2993,10 @@ globby@^11.0.4:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-got@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/got/-/got-15.0.0.tgz#7e9cd70ac72e1681e85b94514be23eed3c5dfebb"
-  integrity sha512-CUqLG9oFZRis7SZq5Bcxh42LpzxXgXwxWVwNljo60oki8Cq3GXVRpDY2K4GwTzYz3htyXf212nfNg2socz4esQ==
+got@^15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/got/-/got-15.0.2.tgz#400039d5e3381dba46cff58b418aefd3f610f369"
+  integrity sha512-opPIdoQSTOGqX3h0d8QQoqCX0oF728V1PFxbPqquAFSeWPUOlPQ3Gi6IKIqGm6NMcDl+DWUwQb2RR+xvuEJOQQ==
   dependencies:
     "@sindresorhus/is" "^7.2.0"
     byte-counter "^0.1.0"
