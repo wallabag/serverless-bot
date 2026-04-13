@@ -2165,13 +2165,13 @@
   resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-15.0.1.tgz#49f731d9453f52d64dd79f5a5626c1cf1b81bea4"
   integrity sha512-Ko2tjWJq8oozHzHV+reuvS5KYIRAokHnGbDwGh/J64LntgpbuylF74ipEL24HCyRjf9FOlBiBHWBR1RlVKsI1w==
 
-"@vitest/coverage-v8@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@vitest/coverage-v8/-/coverage-v8-4.1.2.tgz#2617f76d12065d2caadedb92bb7bb86cd2af1131"
-  integrity sha512-sPK//PHO+kAkScb8XITeB1bf7fsk85Km7+rt4eeuRR3VS1/crD47cmV5wicisJmjNdfeokTZwjMk4Mj2d58Mgg==
+"@vitest/coverage-v8@4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@vitest/coverage-v8/-/coverage-v8-4.1.4.tgz#8af74138432246416fc5193e0858da53c628dfb5"
+  integrity sha512-x7FptB5oDruxNPDNY2+S8tCh0pcq7ymCe1gTHcsp733jYjrJl8V1gMUlVysuCD9Kz46Xz9t1akkv08dPcYDs1w==
   dependencies:
     "@bcoe/v8-coverage" "^1.0.2"
-    "@vitest/utils" "4.1.2"
+    "@vitest/utils" "4.1.4"
     ast-v8-to-istanbul "^1.0.0"
     istanbul-lib-coverage "^3.2.2"
     istanbul-lib-report "^3.0.1"
@@ -2209,10 +2209,10 @@
   dependencies:
     tinyrainbow "^3.0.3"
 
-"@vitest/pretty-format@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-4.1.2.tgz#c2671aa1c931dc8f2759589fc87ea4b2602892c5"
-  integrity sha512-dwQga8aejqeuB+TvXCMzSQemvV9hNEtDDpgUKDzOmNQayl2OG241PSWeJwKRH3CiC+sESrmoFd49rfnq7T4RnA==
+"@vitest/pretty-format@4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-4.1.4.tgz#0ee79cd2ef8321330dabb8cc57ba9bce237e7183"
+  integrity sha512-ddmDHU0gjEUyEVLxtZa7xamrpIefdEETu3nZjWtHeZX4QxqJ7tRxSteHVXJOcr8jhiLoGAhkK4WJ3WqBpjx42A==
   dependencies:
     tinyrainbow "^3.1.0"
 
@@ -2246,12 +2246,12 @@
     "@vitest/pretty-format" "4.0.18"
     tinyrainbow "^3.0.3"
 
-"@vitest/utils@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-4.1.2.tgz#32be8f42eb6683a598b1c61d7ec9f55596c60ecb"
-  integrity sha512-xw2/TiX82lQHA06cgbqRKFb5lCAy3axQ4H4SoUFhUsg+wztiet+co86IAMDtF6Vm1hc7J6j09oh/rgDn+JdKIQ==
+"@vitest/utils@4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-4.1.4.tgz#9518fb0ad0903ae455e82e063fa18e7558aa6065"
+  integrity sha512-13QMT+eysM5uVGa1rG4kegGYNp6cnQcsTc67ELFbhNLQO+vgsygtYJx2khvdt4gVQqSSpC/KT5FZZxUpP3Oatw==
   dependencies:
-    "@vitest/pretty-format" "4.1.2"
+    "@vitest/pretty-format" "4.1.4"
     convert-source-map "^2.0.0"
     tinyrainbow "^3.1.0"
 
