@@ -25,7 +25,7 @@
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.27.7",
     "nock": "^14.0.12",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "serverless-esbuild": "^1.55.1",
     "serverless-offline": "^13.9.0",
     "vitest": "4.0.18"
