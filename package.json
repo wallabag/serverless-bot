@@ -34,7 +34,7 @@
     "@aws-sdk/client-ses": "^3.1042.0",
     "@octokit/rest": "^22.0.1",
     "diffparser": "^2.0.1",
-    "got": "^15.0.3",
+    "got": "^15.0.5",
     "mailparser": "^3.9.8",
     "uri-js": "npm:uri-js-replace"
   },
