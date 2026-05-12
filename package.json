@@ -13,21 +13,22 @@
   "license": "MIT",
   "engines": {
     "npm": "please-use-yarn-instead",
-    "yarn": ">= 1.22.0",
+    "yarn": ">= 1.22.22",
     "node": ">= 24"
   },
   "devDependencies": {
     "@20minutes/eslint-config": "^3.0.3",
     "@fetch-mock/vitest": "^0.2.18",
     "@smithy/util-stream": "^4.6.1",
-    "@vitest/coverage-v8": "4.1.4",
+    "@vitest/coverage-v8": "4.1.6",
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.28.0",
     "nock": "^14.0.15",
+    "serverless": "npm:osls",
     "serverless-esbuild": "^1.57.1",
     "serverless-offline": "^13.10.0",
-    "vitest": "4.1.4"
+    "vitest": "4.1.6"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1045.0",
