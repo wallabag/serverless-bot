@@ -9,6 +9,9 @@ updates:
     aws-sdk-dependencies:
       patterns:
         - "*aws-sdk*"
+    vitest-dependencies:
+      patterns:
+        - "*vitest*"
   ignore:
   # because it requires Serverless v4
   - dependency-name: "serverless-offline"
