@@ -30,8 +30,8 @@
     "vitest": "4.1.4"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1042.0",
-    "@aws-sdk/client-ses": "^3.1042.0",
+    "@aws-sdk/client-s3": "^3.1045.0",
+    "@aws-sdk/client-ses": "^3.1045.0",
     "@octokit/rest": "^22.0.1",
     "diffparser": "^2.0.1",
     "got": "^15.0.3",
