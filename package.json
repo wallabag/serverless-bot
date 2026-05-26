@@ -26,7 +26,7 @@
     "esbuild": "^0.28.0",
     "nock": "^14.0.15",
     "serverless": "npm:osls",
-    "serverless-esbuild": "^1.57.1",
+    "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.0",
     "vitest": "4.1.7"
   },
