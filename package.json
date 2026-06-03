@@ -20,7 +20,7 @@
     "@20minutes/eslint-config": "^3.0.3",
     "@fetch-mock/vitest": "^0.2.18",
     "@smithy/util-stream": "^4.6.4",
-    "@vitest/coverage-v8": "4.1.7",
+    "@vitest/coverage-v8": "4.1.8",
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.28.0",
@@ -28,7 +28,7 @@
     "serverless": "npm:osls",
     "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.0",
-    "vitest": "4.1.7"
+    "vitest": "4.1.8"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1060.0",
