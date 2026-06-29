@@ -36,7 +36,7 @@
     "@octokit/rest": "^22.0.1",
     "diffparser": "^2.0.1",
     "got": "^15.0.7",
-    "mailparser": "^3.9.11",
+    "mailparser": "^3.9.12",
     "uri-js": "npm:uri-js-replace"
   },
   "resolutions": {
