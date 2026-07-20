@@ -1973,7 +1973,7 @@
     "@smithy/core" "^3.24.1"
     tslib "^2.6.2"
 
-"@smithy/core@^3.23.17", "@smithy/core@^3.24.1", "@smithy/core@^3.29.3", "@smithy/core@^3.29.4", "@smithy/core@^3.29.6":
+"@smithy/core@^3.23.17", "@smithy/core@^3.24.1", "@smithy/core@^3.29.4", "@smithy/core@^3.29.6":
   version "3.29.6"
   resolved "https://registry.yarnpkg.com/@smithy/core/-/core-3.29.6.tgz#37ef722115827e4e85fd8621731f0d0009494e6b"
   integrity sha512-TO3w25cdGWBeYqKNDaqH3v4O3jjMPpKwf39YlG5X5xhqWfpOWJbi5gQi1lrllukuwohdhY0TPB8jBEv6UC50Vg==
@@ -2249,12 +2249,12 @@
     "@smithy/core" "^3.24.1"
     tslib "^2.6.2"
 
-"@smithy/util-stream@^4.5.25", "@smithy/util-stream@^4.7.8":
-  version "4.7.8"
-  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.7.8.tgz#35fbcf0aa062fec1b7c2201c29c08b1f33fbad1f"
-  integrity sha512-YmIDkEKLkHEqqYK5AnaBtyS3jCSEIyRaAm9u7sPrYQHUGGQUjfpWT+KdyEBQnKeVpXQnIlG3GKIY2sdpv4xVpA==
+"@smithy/util-stream@^4.5.25", "@smithy/util-stream@^4.7.11":
+  version "4.7.11"
+  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.7.11.tgz#f36915afa43f726f937b47a414e5db70dc6f6a74"
+  integrity sha512-EQyALYU2yeYoTkJQV4lvl3VS0A6Xd+6jBd5W95A+RWw1u5NiIxtz3pw6ZeMMJxKXCDyu/M4Be4LWg1NKmapaKA==
   dependencies:
-    "@smithy/core" "^3.29.3"
+    "@smithy/core" "^3.29.6"
     tslib "^2.6.2"
 
 "@smithy/util-utf8@^2.0.0":
