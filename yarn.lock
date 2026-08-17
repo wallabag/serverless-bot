@@ -1973,12 +1973,12 @@
     "@smithy/core" "^3.24.1"
     tslib "^2.6.2"
 
-"@smithy/core@^3.23.17", "@smithy/core@^3.24.1", "@smithy/core@^3.31.1":
-  version "3.31.1"
-  resolved "https://registry.yarnpkg.com/@smithy/core/-/core-3.31.1.tgz#a57090db8997917d2f99eeb39db50b6283e60d3c"
-  integrity sha512-CyogUINxvi7C7LDsh8Syo6hVJOT9ckz4rG8dRZfTJ8r91HkMY59PnNooaj7WcHyxEkxPfBAmbgztZU+xTo76lg==
+"@smithy/core@^3.23.17", "@smithy/core@^3.24.1", "@smithy/core@^3.31.1", "@smithy/core@^3.32.0":
+  version "3.33.2"
+  resolved "https://registry.yarnpkg.com/@smithy/core/-/core-3.33.2.tgz#64cad79d96e293e1b2bddd8491d869afe5d94696"
+  integrity sha512-CUGXpnPkVdjUCbix+83sWLW9VFgQOm44MDOx/ihITJMAnOZKvL8YYIc7DR9pP/tZ8CIRvMiON/TucvygqbHO3w==
   dependencies:
-    "@smithy/types" "^4.16.1"
+    "@smithy/types" "^4.17.2"
     tslib "^2.6.2"
 
 "@smithy/credential-provider-imds@^4.2.14":
@@ -2161,6 +2161,13 @@
   dependencies:
     tslib "^2.6.2"
 
+"@smithy/types@^4.17.2":
+  version "4.17.2"
+  resolved "https://registry.yarnpkg.com/@smithy/types/-/types-4.17.2.tgz#ad71f6f62460a6409f0e8efc173e2e0f883ea4e6"
+  integrity sha512-FOKpVZob9MPTn2znRzGrnsMHv7BOsKVw3XiP/cOyYLDVZ9qKp4nifIiSCuUU/fIj5Vu0UOAxCFr+qRAtG0NUkA==
+  dependencies:
+    tslib "^2.6.2"
+
 "@smithy/url-parser@^4.2.14":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@smithy/url-parser/-/url-parser-4.3.1.tgz#d7e1b029b5cd76a5c7572f0d5ef61b1b31c31569"
@@ -2249,12 +2256,12 @@
     "@smithy/core" "^3.24.1"
     tslib "^2.6.2"
 
-"@smithy/util-stream@^4.5.25", "@smithy/util-stream@^4.7.16":
-  version "4.7.16"
-  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.7.16.tgz#e5bcaa464acabeabde26a237dbd5a48d3e6e3775"
-  integrity sha512-r/r4fqkU5fkJQaGpTrVssAHuPIwDSHrwz1KQ3rb1riYkL71OsYciHun1i0PWrJLLt+nPvroHXcaz39RdNW3XBw==
+"@smithy/util-stream@^4.5.25", "@smithy/util-stream@^4.8.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@smithy/util-stream/-/util-stream-4.8.0.tgz#96e93e3980f3211d8d01b32c22cd8804a3214a99"
+  integrity sha512-wWKVGUXcGZnxeZM50oE6jX1tObuixzweQYp3XP+IUQe4kdriUsJxKK2eQ8aYwbRzNGhEt2Cc93Wfco4YR57F2Q==
   dependencies:
-    "@smithy/core" "^3.31.1"
+    "@smithy/core" "^3.32.0"
     tslib "^2.6.2"
 
 "@smithy/util-utf8@^2.0.0":
