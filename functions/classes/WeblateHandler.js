@@ -8,7 +8,7 @@ export class WeblateHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     if (body.pull_request.user.login !== 'weblate' || body.sender.login !== 'weblate') {
       return {
@@ -27,7 +27,7 @@ export class WeblateHandler extends Handler {
       }
     )
 
-    console.log('Labelled!')
+    console.info('Labelled!')
 
     return {
       statusCode: 204,

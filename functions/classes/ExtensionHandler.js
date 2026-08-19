@@ -16,7 +16,7 @@ export class ExtensionHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     const payload = {
       success: {
@@ -42,7 +42,7 @@ export class ExtensionHandler extends Handler {
           ? `Response code ${statusCode}${statusMessage ? ` (${statusMessage})` : ''}`
           : e.message
 
-      console.log(errorMessage)
+      console.error(errorMessage)
 
       return {
         statusCode: 500,
@@ -59,7 +59,7 @@ export class ExtensionHandler extends Handler {
       if (/\.txt$/.test(diff.to) === false) {
         payload.failure.description = `Fail: "${diff.to}" has not a txt extension`
 
-        console.log(`Fail: "${diff.to}" has not a txt extension`)
+        console.warn(`Fail: "${diff.to}" has not a txt extension`)
 
         return false
       }
