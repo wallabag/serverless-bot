@@ -17,8 +17,8 @@ export class SiteconfigEmailHandler extends Handler {
 
   async handle(event) {
     try {
-      console.log('Received SES email event')
-      console.log(JSON.stringify(event))
+      console.info('Received SES email event')
+      console.info(JSON.stringify(event))
 
       // Parse the SNS message containing SES notification
       const snsMessage = JSON.parse(event.Records[0].Sns.Message)
@@ -29,7 +29,7 @@ export class SiteconfigEmailHandler extends Handler {
       if (snsMessage.receipt && snsMessage.receipt.action.type === 'S3') {
         // Email is stored in S3
         const s3Info = snsMessage.receipt.action
-        console.log(`Fetching email from S3: ${s3Info.bucketName}/${s3Info.objectKey}`)
+        console.info(`Fetching email from S3: ${s3Info.bucketName}/${s3Info.objectKey}`)
 
         const command = new GetObjectCommand({
           Bucket: s3Info.bucketName,
@@ -53,11 +53,11 @@ export class SiteconfigEmailHandler extends Handler {
       const { subject } = snsMessage.mail.commonHeaders
       const body = parsed.text || parsed.html || ''
 
-      console.log(`Processing email from: ${senderEmail}, subject: ${subject}`)
+      console.info(`Processing email from: ${senderEmail}, subject: ${subject}`)
 
       // Check if this is a reply/response email
       if (this.isReplyEmail(subject, parsed)) {
-        console.log('Email detected as a reply - skipping issue creation')
+        console.warn('Email detected as a reply - skipping issue creation')
 
         return {
           statusCode: 200,
@@ -73,11 +73,11 @@ export class SiteconfigEmailHandler extends Handler {
 
       // Create GitHub issue
       const issue = await this.createGithubIssue(subject, cleanedBody, senderName)
-      console.log(`Created GitHub issue #${issue.number}: ${issue.html_url}`)
+      console.info(`Created GitHub issue #${issue.number}: ${issue.html_url}`)
 
       // Send confirmation email
       await this.sendConfirmationEmail(senderEmail, issue.html_url, issue.number)
-      console.log(`Sent confirmation email to: ${senderEmail}`)
+      console.info(`Sent confirmation email to: ${senderEmail}`)
 
       return {
         statusCode: 200,
@@ -230,7 +230,7 @@ export class SiteconfigEmailHandler extends Handler {
     // Trim leading and trailing whitespace
     cleaned = cleaned.trim()
 
-    console.log(`Email body cleaned: ${body.length} -> ${cleaned.length} characters`)
+    console.info(`Email body cleaned: ${body.length} -> ${cleaned.length} characters`)
 
     return cleaned
   }
@@ -245,21 +245,21 @@ export class SiteconfigEmailHandler extends Handler {
   isReplyEmail(subject, parsed) {
     // Check 1: Subject starts with Re: or RE: (case insensitive)
     if (/^re:/i.test(subject.trim())) {
-      console.log('Reply detected: Subject starts with Re:')
+      console.warn('Reply detected: Subject starts with Re:')
 
       return true
     }
 
     // Check 2: In-Reply-To header exists
     if (parsed.inReplyTo) {
-      console.log(`Reply detected: In-Reply-To header present: ${parsed.inReplyTo}`)
+      console.warn(`Reply detected: In-Reply-To header present: ${parsed.inReplyTo}`)
 
       return true
     }
 
     // Check 3: References header exists (thread reference)
     if (parsed.references && parsed.references.length > 0) {
-      console.log(`Reply detected: References header present: ${parsed.references}`)
+      console.warn(`Reply detected: References header present: ${parsed.references}`)
 
       return true
     }
@@ -280,7 +280,7 @@ export class SiteconfigEmailHandler extends Handler {
 
     for (const prefix of replyPrefixes) {
       if (prefix.test(subject.trim())) {
-        console.log(`Reply detected: Subject matches reply prefix ${prefix}`)
+        console.warn(`Reply detected: Subject matches reply prefix ${prefix}`)
 
         return true
       }
@@ -299,13 +299,13 @@ export class SiteconfigEmailHandler extends Handler {
 
     for (const pattern of quotedTextPatterns) {
       if (pattern.test(bodyText.substring(0, 500))) {
-        console.log(`Reply detected: Body contains quoted text pattern ${pattern}`)
+        console.warn(`Reply detected: Body contains quoted text pattern ${pattern}`)
 
         return true
       }
     }
 
-    console.log('Email does not appear to be a reply')
+    console.info('Email does not appear to be a reply')
 
     return false
   }
