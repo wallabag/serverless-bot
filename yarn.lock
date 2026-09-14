@@ -100,10 +100,10 @@
     "@smithy/types" "^4.17.2"
     tslib "^2.6.2"
 
-"@aws-sdk/client-s3@^3.1130.0", "@aws-sdk/client-s3@^3.975.0":
-  version "3.1130.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.1130.0.tgz#981b83c12f9390e34b1f95386478923b3cdfa417"
-  integrity sha512-TUe0hgQi3RtuccmTgpUsRIuPk07ZtJE6s3vpOeWCM8sibLNXPVKweemNEz5gwaRYTor8MAGgjlyVZfKGuu1ZOQ==
+"@aws-sdk/client-s3@^3.1131.0", "@aws-sdk/client-s3@^3.975.0":
+  version "3.1131.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.1131.0.tgz#b3b3a87a35faecc83a10899996db18b369bca660"
+  integrity sha512-jMw3q5sYNvWJRngkNwdS3H2WPBcdqhdrOez+7fBUB26fpH/2+TaJcDdlzdjgLTMhFTq2eOyXBSy1T/4A6CL/Lw==
   dependencies:
     "@aws-sdk/checksums" "^3.1001.0"
     "@aws-sdk/core" "^3.978.0"
@@ -117,10 +117,10 @@
     "@smithy/types" "^4.17.2"
     tslib "^2.6.2"
 
-"@aws-sdk/client-ses@^3.1130.0":
-  version "3.1130.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ses/-/client-ses-3.1130.0.tgz#8b85589098f780627aa5cb70ef7c7bc9e5dee2ca"
-  integrity sha512-7CfnA8zwG9nDR5o/9rTd4sUHT5omtQBplkiCoScXfZhSJ/jGMYlhiu2uEuj4nimk4grMXxZlskYnPKQGkGgodw==
+"@aws-sdk/client-ses@^3.1131.0":
+  version "3.1131.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ses/-/client-ses-3.1131.0.tgz#7804b070ece884f3ba5a587c77d75d00c701a264"
+  integrity sha512-/ZZqzmy+t27jKPG6a8yqyph09TMcqY6ExfpGXk7p7pk2GDdObLTCocGklOekHBI1rVMhrV5OyoPnzoPVZBxslA==
   dependencies:
     "@aws-sdk/core" "^3.978.0"
     "@aws-sdk/credential-provider-node" "^3.972.83"
