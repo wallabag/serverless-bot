@@ -1480,13 +1480,13 @@
     convert-source-map "^2.0.0"
     tinyrainbow "^3.1.0"
 
-"@zone-eu/mailsplit@5.4.16":
-  version "5.4.16"
-  resolved "https://registry.yarnpkg.com/@zone-eu/mailsplit/-/mailsplit-5.4.16.tgz#1a977d4a56567340e5f17554cad50b6c29571742"
-  integrity sha512-zQ9iXvlT3Wi/hazeC1MdI4rQc1UJwJ6IQ6QzSZ5KDxLZZWQSazWLOzImLFluXadKShJ9WJvI1xH+AyVS8b9azg==
+"@zone-eu/mailsplit@5.4.17":
+  version "5.4.17"
+  resolved "https://registry.yarnpkg.com/@zone-eu/mailsplit/-/mailsplit-5.4.17.tgz#a53778592bc73cf7978f7c3cf52b5198570b9d56"
+  integrity sha512-LOMzdrKRVgaghLaezIPdHRhsGpfDiWNQo1RptWc84CRllI4dWLwqX/L4x1iTt1CaeyvyUfMXM/6mjIsEisT3Tg==
   dependencies:
     libbase64 "1.3.0"
-    libmime "5.4.3"
+    libmime "5.4.4"
     libqp "2.1.1"
 
 abort-controller@^3.0.0:
@@ -2287,10 +2287,10 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
-encoding-japanese@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-2.3.0.tgz#83e6d71a31fa3a10c9b2cfb14f4da6bb5009c0fe"
-  integrity sha512-eQyh1vzHz13DUkZcJO+0IOAoKXRQwKV5IBffeuYsWZyRLGiSzfzXObCqWvqFXdX0UU8qOk+lBXbkUhMCpdJe4Q==
+encoding-japanese@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-2.4.0.tgz#9d19fd65d76d3d5ad7aeb1772f843674c0c2cc36"
+  integrity sha512-PE0KjlsDy9JSsoU4C2Q8NXb1kC4c+bZRac9ZvHXUE4q1Ht63gScKMdEy9jst9+Fi3M4eDkqzkEhBZvix4blP2A==
 
 end-of-stream@^1.4.1:
   version "1.4.5"
@@ -3157,12 +3157,12 @@ libbase64@1.3.0:
   resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.3.0.tgz#053314755a05d2e5f08bbfc48d0290e9322f4406"
   integrity sha512-GgOXd0Eo6phYgh0DJtjQ2tO8dc0IVINtZJeARPeiIJqge+HdsWSuaDTe8ztQ7j/cONByDZ3zeB325AHiv5O0dg==
 
-libmime@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/libmime/-/libmime-5.4.3.tgz#cc94b3499c9a5a3600a3a813fd6a524101c8bd43"
-  integrity sha512-di9BoDabBUMqjeD/wGj+hHpSgdqAph5ui7w6OdY6NpzU6O6VFLQsMOg9tqCjm/zf9OHzAM9EZxSOF7uIb8O8Hw==
+libmime@5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-5.4.4.tgz#89646e47082fb7d2b364f9f4f577ba6d03349bd3"
+  integrity sha512-d3zZ2k8s6iO+8u9Vfkl6HfhD5lSVocGcmOViTz/i0CJcwhJADyubEJ/+TkBhuLDUSIBOiG+D8G5kJKwXwKbXXA==
   dependencies:
-    encoding-japanese "2.3.0"
+    encoding-japanese "2.4.0"
     iconv-lite "0.7.3"
     libbase64 "1.3.0"
     libqp "2.1.1"
@@ -3370,19 +3370,19 @@ magicast@^0.5.4:
     "@babel/types" "^7.29.7"
     source-map-js "^1.2.1"
 
-mailparser@^3.9.25:
-  version "3.9.25"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.9.25.tgz#1cc89432b925989b9f1026e37bed5a9158b6452c"
-  integrity sha512-gMoe9VXhxDRL0tVcqr52gar1Pr0g8QSRIqkrJGMt5FpUKUNlBVPG1rNLNWIzgBWVK6UE9/4J7q78Y5iDNfYwqA==
+mailparser@^3.9.28:
+  version "3.9.28"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.9.28.tgz#f379bfe747ab52fe7df5d437c8163e433e0624b1"
+  integrity sha512-O7oCYzWW9YH5lHk/y3Z8R8dFnUq8wqaH146BuU2NDt/3MGjdfMLzGF2Ft7WksTCeq00covNKpwxQabcG3zJFqQ==
   dependencies:
-    "@zone-eu/mailsplit" "5.4.16"
-    encoding-japanese "2.3.0"
+    "@zone-eu/mailsplit" "5.4.17"
+    encoding-japanese "2.4.0"
     he "1.2.0"
     html-to-text "10.0.1"
     iconv-lite "0.7.3"
-    libmime "5.4.3"
+    libmime "5.4.4"
     linkify-it "5.0.2"
-    nodemailer "10.0.8"
+    nodemailer "10.0.10"
     punycode.js "2.3.1"
     tlds "1.261.0"
 
@@ -3546,10 +3546,10 @@ node-schedule@^2.1.1:
     long-timeout "0.1.1"
     sorted-array-functions "^1.3.0"
 
-nodemailer@10.0.8:
-  version "10.0.8"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.0.8.tgz#0cc4f701259fff4b63d3da8d77add02f1d9a6957"
-  integrity sha512-uCZ0AtFDI46sHwJ6mhwNuIoA/KiTC0ZCzX7g01941+H9VMIXEiZjtgjQkzoBRTeQba0cIrKfwk31q99PfcIMRw==
+nodemailer@10.0.10:
+  version "10.0.10"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.0.10.tgz#a5ac2828272903740cb04ce17d1a4468e2e06cb3"
+  integrity sha512-He9XskOFms62SyAKkLu8CcGcYHAo+BSHSsORI8s4PJH8qZgZY4L4lDfvyN0twvmbpyG+eGrxpyBlskj9d9rJ8A==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
