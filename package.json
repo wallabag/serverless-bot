@@ -24,7 +24,7 @@
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^8.0.0",
     "esbuild": "^0.28.2",
-    "nock": "^15.0.2",
+    "nock": "^15.0.5",
     "serverless": "npm:osls@3",
     "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.2",
