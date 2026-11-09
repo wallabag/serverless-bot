@@ -1563,13 +1563,13 @@
   resolved "https://registry.yarnpkg.com/@vitest/spy/-/spy-5.0.5.tgz#d5629d07a1182899f2159f700d0cd4e73785d6b9"
   integrity sha512-lwJRExuH417257Q5wv9QYugN9IMJkoxcrKrYxGPQkBzl7wlNpTUxD/5yNX4ESKVUIShKPgkGchYPFMWOOk0wzw==
 
-"@zone-eu/mailsplit@5.4.29":
-  version "5.4.29"
-  resolved "https://registry.yarnpkg.com/@zone-eu/mailsplit/-/mailsplit-5.4.29.tgz#6f235b0b89cb4c9245dc9413a91017129192e87f"
-  integrity sha512-CCUNycmUjrV5M0wNf23waWAt9eOHczhjLbUQS7k0FNJvR0py9VSqHFt+tSl/D0+XI73VLG0U+PwYtq9R0zsm9Q==
+"@zone-eu/mailsplit@5.4.30":
+  version "5.4.30"
+  resolved "https://registry.yarnpkg.com/@zone-eu/mailsplit/-/mailsplit-5.4.30.tgz#df0aee564c27586060c6a1e4769d67376a46bbf9"
+  integrity sha512-qN0KT6/ziAFvo5TzscaqpurIJaJQEXPPtqBZnpyhiGrACOKLDVMV6Lm57kXt5e/8zZUWoYiSC8oKl/aewtrJDQ==
   dependencies:
     libbase64 "1.4.1"
-    libmime "5.6.3"
+    libmime "5.6.4"
     libqp "3.0.1"
 
 abort-controller@^3.0.0:
@@ -2363,10 +2363,10 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
-encoding-japanese@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-2.4.0.tgz#9d19fd65d76d3d5ad7aeb1772f843674c0c2cc36"
-  integrity sha512-PE0KjlsDy9JSsoU4C2Q8NXb1kC4c+bZRac9ZvHXUE4q1Ht63gScKMdEy9jst9+Fi3M4eDkqzkEhBZvix4blP2A==
+encoding-japanese@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-2.5.0.tgz#15129d5e3c8f367fa4015301c93f9eae37ece3ac"
+  integrity sha512-5TKhaMWTUF777NQ16OrAkJFuEd1uOnEBw8ODeXFTc/Y9csZZQ6/jiIS5r4aFuzfowu9gLGrE51zqI2H0dLwlmg==
 
 end-of-stream@^1.4.1:
   version "1.4.5"
@@ -3228,12 +3228,12 @@ libbase64@1.4.1:
   resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.4.1.tgz#17be19d66d9c4c51fbfb505fe2263f66e3400962"
   integrity sha512-Nyh3H90B3gRtrcxIe56Ayy7635J0jmh6AbxbQgQae8wrSPQMH5wFqJChiMTB13yKG512L3YspbA5DzumhFTITA==
 
-libmime@5.6.3:
-  version "5.6.3"
-  resolved "https://registry.yarnpkg.com/libmime/-/libmime-5.6.3.tgz#69da78d8781a64d53eccf1893264969138b50258"
-  integrity sha512-cuTUW/Jybvh5O4/U9p61gyutHOjDtZyGQYuY99+bfnaFwqcDf2Nb+R6hMHY6DDen2H9wLKQSMpofWUgn2TI5JQ==
+libmime@5.6.4:
+  version "5.6.4"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-5.6.4.tgz#d297dec344aa6db49f7a9d1c0fee5af5bd1357e8"
+  integrity sha512-QWiiwq3ujIUSsCCjFDldDN7FfXuLYSTnEln0oeYfOjgqyVlRV6WQ3UyJ/paguoz8Ynxy1s7k3kh6xomS3bJkCw==
   dependencies:
-    encoding-japanese "2.4.0"
+    encoding-japanese "2.5.0"
     iconv-lite "0.7.3"
     libbase64 "1.4.1"
     libqp "3.0.1"
@@ -3441,15 +3441,15 @@ magicast@^0.5.5:
     "@babel/types" "^7.29.7"
     source-map-js "^1.2.1"
 
-mailparser@^3.14.1:
-  version "3.14.1"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.14.1.tgz#26d56ed92ed06dbae5fca03537b61937edd7595f"
-  integrity sha512-Z0LLk7F0yhSCx3xjyL8BMm6dXO3vuWrSAeVhm1F18wVGVBbLAKOsVsCjPyOhJy+KuyDW9PRyDuyiPb7yJCHwVA==
+mailparser@^3.14.2:
+  version "3.14.2"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.14.2.tgz#8436b657de8996bb0fffc0e5389809a0148aff1a"
+  integrity sha512-D5hdnLqSfjm6JV361ZqyWCx+bJsU5AovGiNloNqAM0pPJsa0BqVluDh+bgcOS+aHUtJdN/GJ2FVGGtCt841lyw==
   dependencies:
-    "@zone-eu/mailsplit" "5.4.29"
+    "@zone-eu/mailsplit" "5.4.30"
     he "1.2.0"
     html-to-text "10.0.1"
-    libmime "5.6.3"
+    libmime "5.6.4"
     linkify-it "5.0.2"
     nodemailer "10.3.1"
     punycode.js "2.3.1"
