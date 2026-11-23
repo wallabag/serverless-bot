@@ -4070,10 +4070,10 @@ semver@^7.3.8, semver@^7.5.3:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.5.tgz#39b646037dd50c14fb451e7e4cac58ed8b863f69"
   integrity sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==
 
-serverless-esbuild@^1.57.2:
-  version "1.57.2"
-  resolved "https://registry.yarnpkg.com/serverless-esbuild/-/serverless-esbuild-1.57.2.tgz#62bc64e3c3d416879c6c3758f8201566bd06f873"
-  integrity sha512-jhqQm/OaCi6O+ffUk1rZdAA/ZwTUciw08pq1SaJT+gyfgo1Pm6YYP6t5UBsQYU8tSum8d6yiCwN7n52Hv1byJA==
+serverless-esbuild@^1.57.3:
+  version "1.57.3"
+  resolved "https://registry.yarnpkg.com/serverless-esbuild/-/serverless-esbuild-1.57.3.tgz#13e96754701c87721ad10b9927e8fd3aaf6e20a8"
+  integrity sha512-xFEGvOaAS+lUsZ50iZfneBfStmcKtFdXL2IkI5l5uWxiM/wy+zZGTvufgE3QbLRvcA/wmGeiJp8N3kTaIukETA==
   dependencies:
     "@effect/platform" "^0.65.5"
     "@effect/platform-node" "^0.60.5"
